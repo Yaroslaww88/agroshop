@@ -1,6 +1,8 @@
 const mongoose = require('mongoose')
 const Products = require('../models/Product')
 
+
+
 exports.getAllProducts = async (req, res, next) => {
     let products = await Products.find({})
 
@@ -22,7 +24,7 @@ exports.getOneProduct = async (req, res, next) => {
 }
 
 exports.postProducts = async (req, res, next) => {
-    let product = req.body.product
+    let product = req.body
 
     console.log('Product in postProduct: ', product)
 
@@ -71,10 +73,13 @@ exports.deleteOneProduct = async (req, res, next) => {
 } 
 
 exports.updateOneProduct = async (req, res, next) => {
+
+    //console.log(req.b)
+
     try {
         let id = req.params.id
         if (id)
-            await Products.findOneAndUpdate(id, req.body.product)
+            await Products.findOneAndUpdate(id, req.body)
         else {
             res.statusCode = 404
             res.json({success: false, error: 'Empty id of deleted product'})

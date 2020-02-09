@@ -35,10 +35,8 @@ let bodyParser = require('body-parser')
 
 app.use(bodyParser.json())
 
-
-
 /**
- * routers going here
+ * Routes
  */
 
 let products = require('./routes/products')

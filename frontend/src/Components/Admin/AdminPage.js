@@ -56,41 +56,47 @@ const AdminPage = (props) => {
 
     let editItem = async (item) => {
 
-        let name = item.name
-        let description = item.description
-        let in_stock = item.in_stock
-        let id = item.id
+        let formData = new FormData()
 
-        let product = {
-            "product": {name, description, in_stock}
+        formData.append('name', item.name)
+        formData.append('description', item.description)
+        formData.append('in_stock', item.in_stock)
+        formData.append('id', item.id)
+        if (item.image) {
+            formData.append('image', item.image)
         }
 
-        let response = await fetch(`http://localhost:8000/api/products/${id}`, {
+        let response = await fetch(`http://localhost:8000/api/products/${item.id}`, {
             method: 'PUT',
             credentials: 'include',
             headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json',
+                //'Content-Type': 'multipart/form-data',
             },
-            body: JSON.stringify(product)
+            body: formData
         })
 
         try {
             let data = await response.json()
+
+            console.log('data: ', data)
+
             setReload(!reload)
         } catch (ex) {
 
         }
-    } 
+    }
 
     let postItem = async (item) => {
 
-        let name = item.name
-        let description = item.description
-        let in_stock = item.in_stock
+        let formData = new FormData()
 
-        let product = {
-            "product": {name, description, in_stock}
+        formData.append('name', item.name)
+        formData.append('description', item.description)
+        formData.append('in_stock', item.in_stock)
+        formData.append('id', item.id)
+        if (item.image) {
+            formData.append('image', item.image)
         }
 
         let response = await fetch(`http://localhost:8000/api/products/`, {
@@ -98,9 +104,9 @@ const AdminPage = (props) => {
             credentials: 'include',
             headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json',
+                //'Content-Type': 'application/json',
             },
-            body: JSON.stringify(product)
+            body: formData
         })
 
         try {

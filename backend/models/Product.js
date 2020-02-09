@@ -15,8 +15,6 @@ var ProductSchema = new Schema({
         type: String,
         required: true
     }
-    //img: 
-    //{ data: Buffer, contentType: String }
 });
 
 var Products = mongoose.model('Product', ProductSchema);

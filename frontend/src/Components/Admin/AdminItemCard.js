@@ -17,6 +17,8 @@ const ItemCard = ({allItemValue, onDelete, onSubmitEdit}) => {
         if (id !== -1) {
             let item = {name, description, in_stock, id}
 
+            console.log('item: ', item)
+
             onEdit(item)
         } else {
             console.log('AdminItemCard id is unavailable')
@@ -26,6 +28,7 @@ const ItemCard = ({allItemValue, onDelete, onSubmitEdit}) => {
     const [showForm, setShowForm] = useState(false)
 
     const onSumbitForm = (item) => {
+        item.id = id
         onSubmitEdit(item)
     } 
 
