@@ -1,10 +1,12 @@
 import React, { Component, useState, useEffect } from 'react'
 import {Button, Container, Row, Col} from 'reactstrap'
 import AdminCardsGallery from './AdminCardGallery'
+import AddCardItemModel from './AddCardItemModel'
 
 const AdminPage = (props) => {
 
     const [items, setItems] = useState([])
+    const [reload, setReload] = useState(false)
 
     useEffect(() => {
         const fetchData = async () => {
@@ -28,14 +30,13 @@ const AdminPage = (props) => {
         }
 
         fetchData()
-    }, [])
+    }, [reload])
 
     let logout = () => {
         props.onLogOut();
     }
 
     let deleteItem = async (id) => {
-        console.log('item id: ', id)
         let response = await fetch(`http://localhost:8000/api/products/${id}`, {
             method: 'DELETE',
             credentials: 'include',
@@ -47,8 +48,7 @@ const AdminPage = (props) => {
 
         try {
             let data = await response.json()
-
-
+            setReload(!reload)
         } catch (ex) {
 
         }
@@ -57,6 +57,37 @@ const AdminPage = (props) => {
     let editItem = () => {
         
     }
+
+    let postItem = async (item) => {
+
+        let name = item.title
+        let description = item.desc
+        let in_stock = item.checked
+
+        let products = {
+            "products": [{name, description, in_stock}]
+        }
+
+        console.log(products)
+        //products = JSON.stringify(products)
+
+        let response = await fetch(`http://localhost:8000/api/products/`, {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(products)
+        })
+
+        try {
+            let data = await response.json()
+            setReload(!reload)
+        } catch (ex) {
+
+        }
+    } 
 
     return (
         <>
@@ -67,6 +98,11 @@ const AdminPage = (props) => {
                     </Col>
                     <Col>
                         <Button onClick={logout}>Log out</Button>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col>
+                        <AddCardItemModel onSubmit={(item) => postItem(item)}/>
                     </Col>
                 </Row>
                 <Row>

@@ -7,7 +7,7 @@ let controller = require('../controllers/productsController')
 let auth = require('../middlewares/auth')
 
 /**
- * Solve auth issues
+ * Solve auth issues controller.postProducts
  */
 
 router.get('/products/:id', controller.getOneProduct)

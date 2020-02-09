@@ -24,7 +24,7 @@ exports.getOneProduct = async (req, res, next) => {
 exports.postProducts = async (req, res, next) => {
     let products = req.body.products
 
-    console.log(req.body)
+    console.log('Products in postProducts: ', products)
 
     try {
         await Products.insertMany(products)
@@ -33,8 +33,6 @@ exports.postProducts = async (req, res, next) => {
         res.json({error: ex})
         console.log(ex);
     }
-
-    products = await Products.find({})
 
     res.statusCode = 200
     res.json({})

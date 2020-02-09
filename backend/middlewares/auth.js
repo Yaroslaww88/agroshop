@@ -21,7 +21,6 @@ exports.auth = (req, res, next) => {
         res.cookie('user', 'admin', {
             signed: true,
         })
-    console.log('HERE1')
 
         next()
       } else {
