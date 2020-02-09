@@ -1,6 +1,6 @@
 import React, { Component, useState, useEffect } from 'react'
 import {Button, Container, Row, Col} from 'reactstrap'
-import AdminCardsGallery from './AdminCardGallery'
+import AdminCardsGallery from './AdminCardsGallery'
 import AddCardItemModel from './AddCardItemModel'
 
 const AdminPage = (props) => {
@@ -54,22 +54,44 @@ const AdminPage = (props) => {
         }
     }
 
-    let editItem = () => {
-        
-    }
+    let editItem = async (item) => {
+
+        let name = item.name
+        let description = item.description
+        let in_stock = item.in_stock
+        let id = item.id
+
+        let product = {
+            "product": {name, description, in_stock}
+        }
+
+        let response = await fetch(`http://localhost:8000/api/products/${id}`, {
+            method: 'PUT',
+            credentials: 'include',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(product)
+        })
+
+        try {
+            let data = await response.json()
+            setReload(!reload)
+        } catch (ex) {
+
+        }
+    } 
 
     let postItem = async (item) => {
 
-        let name = item.title
-        let description = item.desc
-        let in_stock = item.checked
+        let name = item.name
+        let description = item.description
+        let in_stock = item.in_stock
 
-        let products = {
-            "products": [{name, description, in_stock}]
+        let product = {
+            "product": {name, description, in_stock}
         }
-
-        console.log(products)
-        //products = JSON.stringify(products)
 
         let response = await fetch(`http://localhost:8000/api/products/`, {
             method: 'POST',
@@ -78,7 +100,7 @@ const AdminPage = (props) => {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(products)
+            body: JSON.stringify(product)
         })
 
         try {
@@ -107,7 +129,7 @@ const AdminPage = (props) => {
                 </Row>
                 <Row>
                     <Col>
-                        <AdminCardsGallery onDelete={deleteItem} onEdit={editItem} items={items} />
+                        <AdminCardsGallery onDelete={deleteItem} onSubmitEdit={editItem} items={items} />
                     </Col>
                 </Row>
             </Container>

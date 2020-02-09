@@ -5,35 +5,44 @@ import {
   CardTitle, Button, ButtonToggle
 } from 'reactstrap';
 
-const ItemCard = (props) => {
+const ItemCard = ({history, allItemValue, type}) => {
 
-  if (!props.type || props.type === 0) {
+    let name = allItemValue.name || 'Name is unavailable'
+    let description = allItemValue.description || 'Description is unavailable'
+    let in_stock = allItemValue.in_stock || 'In_stock is unavailable'
+    let id = allItemValue._id || -1
+
+    let openItem = () => {
+      history.push(`/${id}`)
+    }
+
+    if (!type || type === 0) {
     return (
       <div>
         <Card>
-          <CardImg left className="header-img" src="../img/1ycO6.jpg" />
+          <CardImg onClick={openItem} left className="header-img" src="../img/1ycO6.jpg" />
           <CardBody>
-            <CardTitle> {props.title} </CardTitle>
-            <CardText> {props.content} </CardText>
-            <Button> BUTTON </Button>
+          <CardTitle onClick={openItem}> {name} </CardTitle>
+          <CardText> {description} </CardText>
+          <Button> BUTTON </Button>
           </CardBody>
         </Card>
       </div>
     )} else {
-    return (
-      <div class="card flex-row flex-wrap">
-        <div class="card-header border-0">
-            <img className="header-img" src="../img/1ycO6.jpg" alt=""/>
+      return (
+        <div class="card flex-row flex-wrap">
+          <div class="card-header border-0">
+              <img onClick={openItem} className="header-img" src="../img/1ycO6.jpg" alt=""/>
+          </div>
+          <div class="card-block px-2">
+              <CardTitle onClick={openItem}> {name} </CardTitle>
+              <CardText> {description} </CardText>
+              <Button>BUTTON</Button>
+          </div>
         </div>
-        <div class="card-block px-2">
-            <CardTitle> {props.title} </CardTitle>
-            <CardText> {props.content} </CardText>
-            <Button>BUTTON</Button>
-        </div>
-      </div>
-    )
-  }
-};
+      )
+    }
+  };
 
 ItemCard.propTypes = {
     type: PropTypes.number,

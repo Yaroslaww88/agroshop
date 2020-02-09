@@ -22,12 +22,12 @@ exports.getOneProduct = async (req, res, next) => {
 }
 
 exports.postProducts = async (req, res, next) => {
-    let products = req.body.products
+    let product = req.body.product
 
-    console.log('Products in postProducts: ', products)
+    console.log('Product in postProduct: ', product)
 
     try {
-        await Products.insertMany(products)
+        await Products.create(product)
     } catch (ex) {
         res.statusCode = 400
         res.json({error: ex})
@@ -55,9 +55,27 @@ exports.deleteOneProduct = async (req, res, next) => {
     try {
         let id = req.params.id
         if (id)
-            await Products.findByIdAndDelete(id)
+            await Products.findByIdAndDelete(id, req.body.product)
         else {
-            console.log('Empty id of deleted product')
+            res.statusCode = 404
+            res.json({success: false, error: 'Empty id of deleted product'})
+        }
+    } catch (ex) {
+        res.statusCode = 400
+        res.json({error: ex})
+        console.log(ex);
+    }
+
+    res.statusCode = 200
+    res.json({success: true})
+} 
+
+exports.updateOneProduct = async (req, res, next) => {
+    try {
+        let id = req.params.id
+        if (id)
+            await Products.findOneAndUpdate(id, req.body.product)
+        else {
             res.statusCode = 404
             res.json({success: false, error: 'Empty id of deleted product'})
         }

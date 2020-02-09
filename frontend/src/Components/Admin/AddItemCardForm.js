@@ -1,29 +1,39 @@
 import React, { useState } from 'react';
 import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 
-const AdditemCardForm = ({onSubmit}) => {
+const AdditemCardForm = ({initDescription = '', initName = '', initInStock = true, onSubmit}) => {
 
-    const [desc, setDesc] = useState('')
-    const [title, setTitle] = useState('')
-    const [checked, setChecked] = useState(true)
+    const [description, setDescription] = useState(initDescription)
+    const [name, setName] = useState(initName)
+    const [in_stock, setInStock] = useState(initInStock)
+
+    const submit = () => {
+        let item = {
+            name,
+            description,
+            in_stock
+        }
+
+        onSubmit(item);
+    }
 
     return (
         <Form>
-        <FormGroup>
-            <Label for="title-id">Title</Label>
-            <Input type="text" name="title" id="title-id" placeholder="enter a title" onChange={(e) => setTitle(e.target.value)}/>
-        </FormGroup>
-        <FormGroup>
-            <Label for="description-id">Description</Label>
-            <Input type="textarea" name="description" id="description-id" className='form-textarea' onChange={(e) => setDesc(e.target.value)}/>
-        </FormGroup>
-        <FormGroup check>
-            <Label check>
-            <Input type="checkbox" checked={checked} onChange={() => setChecked(!checked)}/>{' '}
-                Available
-            </Label>
-        </FormGroup>
-        <Button type="submit" onClick={(e) => {e.preventDefault(); onSubmit({desc, title, checked})}}>Submit</Button>
+            <FormGroup>
+                <Label for="name-id">Name</Label>
+                <Input type="text" name="name" id="name-id" placeholder="enter a name" onChange={(e) => setName(e.target.value)}/>
+            </FormGroup>
+            <FormGroup>
+                <Label for="description-id">Description</Label>
+                <Input type="textarea" name="description" id="description-id" className='form-textarea' onChange={(e) => setDescription(e.target.value)}/>
+            </FormGroup>
+            <FormGroup check>
+                <Label check>
+                <Input type="checkbox" checked={in_stock} onChange={() => setInStock(!in_stock)}/>{' '}
+                    In stock
+                </Label>
+            </FormGroup>
+            <Button type="submit" onClick={(e) => {e.preventDefault(); submit()}}>Submit</Button>
         </Form>
     );
 }

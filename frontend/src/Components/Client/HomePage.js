@@ -31,19 +31,17 @@ const HomePage = (props) => {
     }, []);
 
     return (
-        <>
-            <Container>
-                <Row>
-                    <ButtonGroup className="ml-auto">
-                        <Button color="primary" onClick={() => setViewType(0)} active={viewType === 0}>Gallery</Button>
-                        <Button color="primary" onClick={() => setViewType(1)} active={viewType === 1}>Column</Button>
-                    </ButtonGroup>
-                </Row>
-                <Row>
-                    <CardsGallery viewType={viewType} items={items}/>
-                </Row>
-            </Container>
-        </>
+        <Container>
+            <Row>
+                <ButtonGroup className="ml-auto">
+                    <Button color="primary" onClick={() => setViewType(0)} active={viewType === 0}>Gallery</Button>
+                    <Button color="primary" onClick={() => setViewType(1)} active={viewType === 1}>Column</Button>
+                </ButtonGroup>
+            </Row>
+            <Row>
+                <CardsGallery {...props} viewType={viewType} items={items}/>
+            </Row>
+        </Container>
     );
 }
 

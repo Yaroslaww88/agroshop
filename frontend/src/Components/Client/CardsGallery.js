@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import ItemCard from './ItemCard';
 import { Container, Row, Col } from 'reactstrap';
 
-const CardsGallery = ({viewType, items}) => {
+const CardsGallery = ({history, viewType, items}) => {
 
     const random = () => {
         return Math.random(10000);
@@ -17,7 +17,7 @@ const CardsGallery = ({viewType, items}) => {
                     if (!el.name) {
                         return <Col></Col>
                     } 
-                    return <Col><ItemCard key={random()} title={el.name} content={el.description}/></Col>
+                    return <Col><ItemCard history={history} key={random()} allItemValue={el}/></Col>
                 })}
             </Row>
         )
@@ -49,7 +49,7 @@ const CardsGallery = ({viewType, items}) => {
 
             return rowsArray;
         } else {
-            return items.map(el => <Col><ItemCard key={random()} type={1} title={el.name} content={el.description}/></Col>)
+            return items.map(el => <Col><ItemCard history={history} key={random()} type={1} allItemValue={el}/></Col>)
         }
     }
 
