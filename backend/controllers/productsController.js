@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const Products = require('../models/Product')
-
+const fs = require('fs')
 
 
 exports.getAllProducts = async (req, res, next) => {
@@ -29,15 +29,21 @@ exports.postProducts = async (req, res, next) => {
     console.log('Product in postProduct: ', product)
 
     try {
-        await Products.create(product)
+        let createdProduct = await Products.create(product)
+        let file = req.file
+        let path = file.path
+        let newPath = path.substring(0, path.indexOf(file.filename)) + createdProduct.id.toString() + '.png'
+        fs.renameSync(path, newPath, function(err) {
+            if (err) throw new Error('error while renaming file')
+        })
+        console.log('new file name: ', newPath)
+        res.json({})
+        res.statusCode = 200
     } catch (ex) {
-        res.statusCode = 400
-        res.json({error: ex})
         console.log(ex);
+        res.json({error: ex})
+        res.statusCode = 400
     }
-
-    res.statusCode = 200
-    res.json({})
 }
 
 exports.deleteAllProducts = async (req, res, next) => {
@@ -73,9 +79,6 @@ exports.deleteOneProduct = async (req, res, next) => {
 } 
 
 exports.updateOneProduct = async (req, res, next) => {
-
-    //console.log(req.b)
-
     try {
         let id = req.params.id
         if (id)
