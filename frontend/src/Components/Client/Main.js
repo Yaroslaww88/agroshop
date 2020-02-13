@@ -1,28 +1,30 @@
-import React, { Component } from 'react';
-import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
-import { TransitionGroup, CSSTransition } from 'react-transition-group';
-import HomePage from './HomePage';
-import Navbar from './NavbarComponent';
-import Footer from './FooterComponent';
-import AboutComponent from './AboutComponent';
-import Header from './HeaderComponent';
+import React, { Component } from 'react'
+import { Switch, Route, Redirect, BrowserRouter, withRouter, useRouteMatch } from 'react-router-dom'
+import { TransitionGroup, CSSTransition } from 'react-transition-group'
+import HomePage from './HomePage'
+import Navbar from './NavbarComponent'
+import Footer from './FooterComponent'
+import AboutComponent from './AboutComponent'
+import Header from './HeaderComponent'
+import ItemPageComponent from './ItemPageComponent' 
 
 const Main = (props) => {
+
+    let { path, url } = useRouteMatch();
+
+    console.log(props)
+
     return (
         <>
         
             <Header />
             <Navbar />   
 
-            <TransitionGroup>
-                <CSSTransition classNames="page" timeout={300}>
-                    <Switch>
-                        <Route exact path="/" component={HomePage} />
-                        <Route exact path="/about" component={AboutComponent} />
-                    </Switch>
-                </CSSTransition>
-            </TransitionGroup>
-
+            <Switch>
+                <Route exact path={path} component={HomePage}/>
+                <Route path="/about" component={AboutComponent}/>
+                <Route path="/:id" component={ItemPageComponent}/>
+            </Switch>
         </>
     );
 }

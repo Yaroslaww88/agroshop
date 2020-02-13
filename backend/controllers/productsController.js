@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const Products = require('../models/Product')
 const fs = require('fs')
-
+const path = require('path')
 
 exports.getAllProducts = async (req, res, next) => {
     let products = await Products.find({})
@@ -33,11 +33,12 @@ exports.postProducts = async (req, res, next) => {
         let file = req.file
         let path = file.path
         let newPath = path.substring(0, path.indexOf(file.filename)) + createdProduct.id.toString() + '.png'
+        console.log('newPath: ', newPath)
         fs.renameSync(path, newPath, function(err) {
             if (err) throw new Error('error while renaming file')
         })
         console.log('new file name: ', newPath)
-        res.json({})
+        res.json({success: true})
         res.statusCode = 200
     } catch (ex) {
         console.log(ex);
@@ -59,12 +60,15 @@ exports.deleteAllProducts = async (req, res, next) => {
     res.json({success: true})
 }
 
+
 exports.deleteOneProduct = async (req, res, next) => {
     try {
         let id = req.params.id
-        if (id)
+        if (id) {
             await Products.findByIdAndDelete(id, req.body.product)
-        else {
+            fs.unlinkSync(path.join(__dirname, `/../../frontend/public/img/${id}.png`))
+        } else {
+            console.log('no id in deleteOneProduct')
             res.statusCode = 404
             res.json({success: false, error: 'Empty id of deleted product'})
         }
@@ -81,18 +85,20 @@ exports.deleteOneProduct = async (req, res, next) => {
 exports.updateOneProduct = async (req, res, next) => {
     try {
         let id = req.params.id
-        if (id)
-            await Products.findOneAndUpdate(id, req.body)
-        else {
+        if (!id) {
             res.statusCode = 404
             res.json({success: false, error: 'Empty id of deleted product'})
         }
+        
+        let updatedProduct = await Products.findOneAndUpdate(id, req.body)
+        /*let file = req.file
+        let path = file.path
+        let newPath = path.substring(0, path.indexOf(file.filename)) + createdProduct.id.toString() + '.png'*/
+        res.statusCode = 200
+        res.json({success: true})
     } catch (ex) {
         res.statusCode = 400
         res.json({error: ex})
         console.log(ex);
     }
-
-    res.statusCode = 200
-    res.json({success: true})
 } 

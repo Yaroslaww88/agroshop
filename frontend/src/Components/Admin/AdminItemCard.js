@@ -13,6 +13,8 @@ const ItemCard = ({allItemValue, onDelete, onSubmitEdit}) => {
     let in_stock = allItemValue.in_stock || 'In_stock is unavailable'
     let id = allItemValue._id || -1
 
+    let url = '../img/' + id + '.png'
+
     const edit = () => {
         if (id !== -1) {
             let item = {name, description, in_stock, id}
@@ -39,7 +41,7 @@ const ItemCard = ({allItemValue, onDelete, onSubmitEdit}) => {
     return (
         <div class="card flex-row flex-wrap">
             <div class="card-header border-0">
-                <img className="header-img" src="../img/1ycO6.jpg" alt=""/>
+                <img className="header-img" src={url} alt="image"/>
             </div>
             <div class="card-block px-2">
                 <CardTitle> {name} </CardTitle>

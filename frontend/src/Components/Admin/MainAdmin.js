@@ -1,35 +1,28 @@
 import React, { Component, useState, useEffect } from 'react'
 import LoginPage from './LoginPage'
 import AdminPage from './AdminPage'
+import { useCookies } from 'react-cookie'
 
-const MainAdmin = () => {
+const MainAdmin = ({history}) => {
 
-    const [auth, setAuth] = useState(false)
-
-    /*useEffect(() => {
-        function handleAuthChange(status) {
-            setAuth(status)
-        }
-    })*/
+    const [reload, setReload] = useState(false)
+    const [cookies, setCookie, removeCookie] = useCookies('')
 
     const onLogIn = () => {
-        localStorage.setItem('auth', true)
-        setAuth(true)
+        window.location.reload(); 
     } 
 
     const onLogOut = () => {
-        localStorage.removeItem('auth')
-        setAuth(false)
+        removeCookie('user')
+        window.location.reload(); 
     } 
 
     return (
         <div>
-            {auth === false ? 
-                <LoginPage onLogIn={() => onLogIn()}/>
-            : null}
-            {auth === true ? 
-                <AdminPage onLogOut={() => onLogOut()}/>
-            : null}
+            {cookies.user ? 
+                <AdminPage onLogOut={onLogOut}/>
+            : <LoginPage onLogIn={onLogIn}/>}
+            
         </div>
     );
 }

@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {
   Card, CardImg, CardText, CardBody,
-  CardTitle, Button, ButtonToggle
+  CardTitle, Button, ButtonToggle, Row, Col, CardImgOverlay,
+  NavLink
 } from 'reactstrap';
 
 const ItemCard = ({history, allItemValue, type}) => {
@@ -12,34 +13,49 @@ const ItemCard = ({history, allItemValue, type}) => {
     let in_stock = allItemValue.in_stock || 'In_stock is unavailable'
     let id = allItemValue._id || -1
 
+    let url = '../img/' + id + '.png'
+
+    console.log('id of AllItemValue: ', id)
+
     let openItem = () => {
       history.push(`/${id}`)
     }
 
+    let getDescription = () => {
+      if (description.length > 100) {
+        return description.slice(0, 97) + '...'
+      } else
+        return description
+    }
+
     if (!type || type === 0) {
     return (
-      <div>
-        <Card>
-          <CardImg onClick={openItem} left className="header-img" src="../img/1ycO6.jpg" />
-          <CardBody>
+      <Card>
+        <CardImg onClick={openItem} left className="header-img" src={url} alt="image" />
+        <CardBody>
           <CardTitle onClick={openItem}> {name} </CardTitle>
-          <CardText> {description} </CardText>
+          <CardText> {getDescription()} </CardText>
           <Button> BUTTON </Button>
-          </CardBody>
-        </Card>
-      </div>
+        </CardBody>
+      </Card>
     )} else {
       return (
-        <div class="card flex-row flex-wrap">
-          <div class="card-header border-0">
-              <img onClick={openItem} className="header-img" src="../img/1ycO6.jpg" alt=""/>
-          </div>
-          <div class="card-block px-2">
-              <CardTitle onClick={openItem}> {name} </CardTitle>
-              <CardText> {description} </CardText>
-              <Button>BUTTON</Button>
-          </div>
-        </div>
+        <Card body outline color="success">
+          <Row>
+            <Col xs="4">
+              <CardImg onClick={openItem} left className="header-img" src={url} alt="image" />
+            </Col>
+            <Col xs="6">
+              <CardBody>
+                <CardTitle onClick={openItem} className="link"> 
+                    {name}
+                </CardTitle>
+                <CardText> {getDescription()} </CardText>
+                <Button outline color="success" size="lg"> BUTTON </Button>
+              </CardBody>
+            </Col>
+          </Row>
+        </Card>
       )
     }
   };
@@ -51,3 +67,14 @@ ItemCard.propTypes = {
 }
 
 export default ItemCard;
+
+/*<div class="card flex-row flex-wrap">
+          <div class="card-header border-0">
+              <img onClick={openItem} className="header-img" src={url} alt="image"/>
+          </div>
+          <div class="card-block px-2">
+              <CardTitle onClick={openItem}> {name} </CardTitle>
+              <CardText> {description} </CardText>
+              <Button>BUTTON</Button>
+          </div>
+        </div>*/

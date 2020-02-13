@@ -1,11 +1,14 @@
 import React, { Component, useState } from 'react'
 import { InputGroup, InputGroupAddon, InputGroupText, Input, Container, Row, Col, Alert, Button } from 'reactstrap'
+import { useCookies } from 'react-cookie'
 
 const LoginPage = (props) => {
 
     const [username, setUsername] = useState('admin')
     const [password, setPassword] = useState('admin')
     const [alert, setAlert] = useState(0)
+    const [cookies, setCookie, removeCookie] = useCookies('')
+
 
     const login = async () => {
 

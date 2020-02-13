@@ -61,7 +61,6 @@ const AdminPage = (props) => {
         formData.append('name', item.name)
         formData.append('description', item.description)
         formData.append('in_stock', item.in_stock)
-        formData.append('id', item.id)
         if (item.image) {
             formData.append('image', item.image)
         }
@@ -94,7 +93,7 @@ const AdminPage = (props) => {
         formData.append('name', item.name)
         formData.append('description', item.description)
         formData.append('in_stock', item.in_stock)
-        formData.append('id', item.id)
+
         if (item.image) {
             formData.append('image', item.image)
         }

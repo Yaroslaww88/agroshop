@@ -3,6 +3,10 @@
 /*========================================
                 Navbar
 =========================================*/
+body {
+    font-size: large !important;
+}
+
 .nav-link-header{
     font-size: 30px;
     opacity: 1;
@@ -16,7 +20,7 @@
 }
 
 .header-img {
-    max-height: 100px;
+    max-height: 200px;
 }
 
 .btn-group {
@@ -26,4 +30,19 @@
 .form-textarea {
     width: 300px;
     height: 500px !important;
+}
+
+.link:hover {
+    transition-duration: .5s;
+    color: green;
+    opacity: 1;
+}
+
+.card {
+    background-color: rgba(0, 0, 0, 0.1) !important;
+    
+}
+
+.card-col {
+    padding-top: 10px;
 }

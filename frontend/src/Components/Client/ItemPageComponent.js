@@ -6,6 +6,8 @@ const ItemPageComponent = (props) => {
 
     const [item, setItem] = useState({})
 
+    console.log(props.match)
+
     useEffect(() => {
 
         console.log(props)

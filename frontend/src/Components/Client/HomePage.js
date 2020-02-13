@@ -34,8 +34,12 @@ const HomePage = (props) => {
         <Container>
             <Row>
                 <ButtonGroup className="ml-auto">
-                    <Button color="primary" onClick={() => setViewType(0)} active={viewType === 0}>Gallery</Button>
-                    <Button color="primary" onClick={() => setViewType(1)} active={viewType === 1}>Column</Button>
+                    <Button color="primary" outline color="success" onClick={() => setViewType(0)} active={viewType === 0}>
+                        <img src="./icons/square-menu.png"></img>
+                    </Button>
+                    <Button color="primary" outline color="success" onClick={() => setViewType(1)} active={viewType === 1}>
+                        <img src="./icons/list-menu.png"></img>
+                    </Button>
                 </ButtonGroup>
             </Row>
             <Row>

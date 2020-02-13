@@ -26,7 +26,7 @@ const AdditemCardForm = ({initDescription = '', initName = '', initInStock = tru
             <FormGroup row>
                 <Label for="file-id" sm={2}>File</Label>
                 <Col sm={10}>
-                    <Input type="file" name="file" id="file-id" onChange={(e) => {console.log('e.target.files: ', e.target.files); setImage(e.target.files[0])}}/>
+                    <Input type="file" name="file" id="file-id" onChange={(e) => {e.preventDefault(); setImage(e.target.files[0])}}/>
                 </Col>
             </FormGroup>
             <FormGroup>
@@ -43,7 +43,7 @@ const AdditemCardForm = ({initDescription = '', initName = '', initInStock = tru
                     In stock
                 </Label>
             </FormGroup>
-            <Button type="submit" onClick={(e) => {e.preventDefault(); submit()}}>Submit</Button>
+            <Button type="button" onClick={(e) => {e.preventDefault(); submit()}}>Submit</Button>
         </Form>
     );
 }

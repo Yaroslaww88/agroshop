@@ -17,7 +17,7 @@ const CardsGallery = ({history, viewType, items}) => {
                     if (!el.name) {
                         return <Col></Col>
                     } 
-                    return <Col><ItemCard history={history} key={random()} allItemValue={el}/></Col>
+                    return <Col className="card-col" xs={`${12/arr.length}`}><ItemCard history={history} key={random()} allItemValue={el}/></Col>
                 })}
             </Row>
         )
@@ -49,7 +49,7 @@ const CardsGallery = ({history, viewType, items}) => {
 
             return rowsArray;
         } else {
-            return items.map(el => <Col><ItemCard history={history} key={random()} type={1} allItemValue={el}/></Col>)
+            return items.map(el => <Col className="card-col" ><ItemCard history={history} key={random()} type={1} allItemValue={el}/></Col>)
         }
     }
 

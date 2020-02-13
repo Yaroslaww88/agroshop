@@ -2,17 +2,19 @@ import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Main from './Main'
 import MainAdmin from '../Admin/MainAdmin'
-import ItemPageComponent from './ItemPageComponent' 
+import AboutComponent from './AboutComponent'
+import { CookiesProvider } from 'react-cookie'
 
 const App = () => {
   return (
-    <BrowserRouter>
-      <Switch>
-        <Route exact path="/" component={Main} />
-        <Route exact path="/admin" component={MainAdmin} />
-        <Route path="/:id" component={ItemPageComponent} />
-      </Switch>
-    </BrowserRouter>
+    <CookiesProvider>
+      <BrowserRouter>
+        <Switch>
+          <Route exact path="/admin" component={MainAdmin}/>
+          <Route path="/" component={Main}/>
+        </Switch>
+      </BrowserRouter>
+    </CookiesProvider>
   );
 }
 
