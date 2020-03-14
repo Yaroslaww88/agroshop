@@ -4,8 +4,8 @@ import { useCookies } from 'react-cookie'
 
 const LoginPage = (props) => {
 
-    const [username, setUsername] = useState('admin')
-    const [password, setPassword] = useState('admin')
+    const [username, setUsername] = useState('')
+    const [password, setPassword] = useState('')
     const [alert, setAlert] = useState(0)
     const [cookies, setCookie, removeCookie] = useCookies('')
 
@@ -14,7 +14,7 @@ const LoginPage = (props) => {
 
         let encode = btoa(`${username}:${password}`)
 
-        let response = await fetch('http://localhost:8000/api/login', {
+        let response = await fetch('/api/login', {
             method: 'POST',
             credentials: 'include',
             headers: {

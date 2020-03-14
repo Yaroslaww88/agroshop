@@ -10,7 +10,7 @@ const AdminPage = (props) => {
 
     useEffect(() => {
         const fetchData = async () => {
-            let response = await fetch('http://localhost:8000/api/products', {
+            let response = await fetch('/api/products', {
                 method: 'GET',
                 credentials: 'include',
                 headers: {
@@ -37,7 +37,7 @@ const AdminPage = (props) => {
     }
 
     let deleteItem = async (id) => {
-        let response = await fetch(`http://localhost:8000/api/products/${id}`, {
+        let response = await fetch(`/api/products/${id}`, {
             method: 'DELETE',
             credentials: 'include',
             headers: {
@@ -65,7 +65,7 @@ const AdminPage = (props) => {
             formData.append('image', item.image)
         }
 
-        let response = await fetch(`http://localhost:8000/api/products/${item.id}`, {
+        let response = await fetch(`/api/products/${item.id}`, {
             method: 'PUT',
             credentials: 'include',
             headers: {
@@ -98,7 +98,7 @@ const AdminPage = (props) => {
             formData.append('image', item.image)
         }
 
-        let response = await fetch(`http://localhost:8000/api/products/`, {
+        let response = await fetch(`/api/products/`, {
             method: 'POST',
             credentials: 'include',
             headers: {

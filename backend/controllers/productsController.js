@@ -66,7 +66,7 @@ exports.deleteOneProduct = async (req, res, next) => {
         let id = req.params.id
         if (id) {
             await Products.findByIdAndDelete(id, req.body.product)
-            fs.unlinkSync(path.join(__dirname, `/../../frontend/public/img/${id}.png`))
+            fs.unlinkSync(path.join(__dirname, `/../../frontend/build/img/${id}.png`))
         } else {
             console.log('no id in deleteOneProduct')
             res.statusCode = 404

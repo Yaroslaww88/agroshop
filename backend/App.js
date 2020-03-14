@@ -6,7 +6,6 @@ const config = require('./config')
 const mongoose = require('mongoose')
 const Products = require('./models/Product')
 
-
 const url = config.mongoUrl
 const connect = mongoose.connect(url)
 
@@ -15,35 +14,67 @@ connect.then((db) => {
 }, (err) => { console.log(err); })
 
 
-
-
+/**
+ * Set up
+ */
 const express = require('express')
-var cors = require('cors')
-const app = express();
-const morgan = require('morgan')
 
-const port = process.env.PORT || 8000
+const app = express();
+
+
+/**
+ * Cors
+ */
+const cors = require('cors')
 
 app.use(cors(config.corsOptions))
+
+
+/**
+ * Logging
+ */
+const morgan = require('morgan')
+
 app.use(morgan('dev'))
 
+
+/**
+ * Cookies
+ */
 const cookierParser = require('cookie-parser')
 
 app.use(cookierParser(config.cookieSecret))
 
-let bodyParser = require('body-parser')
+const bodyParser = require('body-parser')
 
 app.use(bodyParser.json())
+
 
 /**
  * Routes
  */
-
-let products = require('./routes/products')
-let login = require('./routes/login')
+const products = require('./routes/products')
+const login = require('./routes/login')
 
 app.use('/api', products)
 app.use('/api', login)
+
+
+/**
+ * Static
+ */
+const path = require('path')
+
+app.use(express.static(path.join(__dirname, '../frontend/build')))
+app.get('*', function(req, res) {
+  res.sendFile(path.join(__dirname, '../frontend/build', 'index.html'))
+})
+
+
+/**
+ * Go live
+ */
+const port = process.env.PORT || 8000
 
 app.listen(port, () => {
     console.log(`Server started and working on port ${port}`)

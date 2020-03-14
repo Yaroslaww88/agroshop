@@ -9,7 +9,7 @@ const HomePage = (props) => {
 
     useEffect(() => {
         const fetchData = async () => {
-            let response = await fetch('http://localhost:8000/api/products', {
+            let response = await fetch('/api/products', {
                 method: 'GET',
                 headers: {
                     'Accept': 'application/json',

@@ -13,7 +13,7 @@ const ItemPageComponent = (props) => {
         console.log(props)
 
         const fetchData = async () => {
-            let response = await fetch(`http://localhost:8000/api/products/${props.match.params.id}`, {
+            let response = await fetch(`/api/products/${props.match.params.id}`, {
                 method: 'GET',
                 headers: {
                     'Accept': 'application/json',
