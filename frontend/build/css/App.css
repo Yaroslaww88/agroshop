@@ -1,0 +1,48 @@
+/*@import url("https://fonts.googleapis.com/css?family=Poppins:400,700");*/
+
+/*========================================
+                Navbar
+=========================================*/
+body {
+    font-size: large !important;
+}
+
+.nav-link-header{
+    font-size: 30px;
+    opacity: 1;
+    /*background-color: green;*/
+}
+.nav-link-header:hover{
+    color: black;
+    transition-duration: .5s;
+    background-color: green;
+    opacity: 0.7;
+}
+
+.header-img {
+    max-height: 200px;
+}
+
+.btn-group {
+    float: right;
+}
+
+.form-textarea {
+    width: 300px;
+    height: 500px !important;
+}
+
+.link:hover {
+    transition-duration: .5s;
+    color: green;
+    opacity: 1;
+}
+
+.card {
+    background-color: rgba(0, 0, 0, 0.1) !important;
+    
+}
+
+.card-col {
+    padding-top: 10px;
+}
