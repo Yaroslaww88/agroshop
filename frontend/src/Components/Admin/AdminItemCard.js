@@ -13,7 +13,8 @@ const ItemCard = ({allItemValue, onDelete, onSubmitEdit}) => {
     let in_stock = allItemValue.in_stock || 'In_stock is unavailable'
     let id = allItemValue._id || -1
 
-    let url = './img/' + id + '.png'
+
+    let url = process.env.PUBLIC_URL + '/img/' + id + '.png'
     console.log("url:", url)
 
     const edit = () => {

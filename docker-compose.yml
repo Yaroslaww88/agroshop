@@ -21,7 +21,7 @@ services:
     image: agroshop_backend
     build: ./backend
     ports: 
-        - "8000:8000"
+        - "80:80"
     volumes:
         - ./frontend:/frontend
     depends_on: 

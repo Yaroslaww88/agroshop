@@ -67,15 +67,17 @@ const path = require('path')
 
 app.use(express.static(path.join(__dirname, '../frontend/build')))
 app.get('*', function(req, res) {
-  res.sendFile(path.join(__dirname, '../frontend/build', 'index.html'))
+  res.sendFile(path.join(__dirname, '../frontend/build/index.html'))
 })
 
 
 /**
  * Go live
  */
-const port = process.env.PORT || 8000
+let http = require('http');
+http.createServer(app).listen(80);
+/*const port = process.env.PORT || 80
 
 app.listen(port, () => {
     console.log(`Server started and working on port ${port}`)
-});
+});*/
