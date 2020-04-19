@@ -1,5 +1,3 @@
-const mongoose = require('mongoose')
-const Products = require('../models/Product')
 const fs = require('fs')
 const path = require('path')
 
