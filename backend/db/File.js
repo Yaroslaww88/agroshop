@@ -26,7 +26,7 @@ module.exports = class File {
         try {
             form.on('fileBegin', function(filename, file) {
                 //TODO: fix path concatenation, because file path must be already in this.location
-                console.log('AAA', this.location)
+                //console.log('AAA', this.location)
                 file.path = path.join(this.location, filename)
             })
             form.on('end', function() {
