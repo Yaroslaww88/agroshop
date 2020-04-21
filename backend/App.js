@@ -44,7 +44,7 @@ app.use(bodyParser.json())
 /**
  * Routes
  */
-const mountRoutes = require('./routes/index')
+const mountRoutes = require('./routes/indexRouter')
 mountRoutes(app)
 
 
