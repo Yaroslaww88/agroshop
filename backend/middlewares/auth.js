@@ -1,42 +1,42 @@
-exports.auth = (req, res, next) => {
+// exports.auth = (req, res, next) => {
 
-    if (!req.signedCookies.user) {
+//     if (!req.signedCookies.user) {
 
-      var authHeader = req.headers['authorization']
-      if (!authHeader) {
-        var err = new Error("You are not authenticated")
+//       var authHeader = req.headers['authorization']
+//       if (!authHeader) {
+//         var err = new Error("You are not authenticated")
   
-        //res.setHeader("WWW-Authenticate", "Basic")
-        err.status = 401
-        next(err)
-      }
+//         //res.setHeader("WWW-Authenticate", "Basic")
+//         err.status = 401
+//         next(err)
+//       }
   
-      var auth = new Buffer.from(authHeader.split(" ")[1], "base64")
-        .toString()
-        .split(":")
-      var username = auth[0]
-      var password = auth[1]
+//       var auth = new Buffer.from(authHeader.split(" ")[1], "base64")
+//         .toString()
+//         .split(":")
+//       var username = auth[0]
+//       var password = auth[1]
   
-      if (username === "admin" && password === "admin") {
-        res.cookie('user', 'admin', {
-            signed: true,
-        })
+//       if (username === "admin" && password === "admin") {
+//         res.cookie('user', 'admin', {
+//             signed: true,
+//         })
 
-        next()
-      } else {
-        var err = new Error("You are not authenticated")
+//         next()
+//       } else {
+//         var err = new Error("You are not authenticated")
   
-        //res.setHeader("WWW-Authenticate", "Basic")
-        err.status = 401
-        next(err)
-      }
-    } else {
-        if (req.signedCookies.user === 'admin') {
-            next();
-        } else {
-          var err = new Error("You are not authenticated")
-          err.status = 401
-          next(err)
-        }
-    }
-}
+//         //res.setHeader("WWW-Authenticate", "Basic")
+//         err.status = 401
+//         next(err)
+//       }
+//     } else {
+//         if (req.signedCookies.user === 'admin') {
+//             next();
+//         } else {
+//           var err = new Error("You are not authenticated")
+//           err.status = 401
+//           next(err)
+//         }
+//     }
+// }

@@ -18,12 +18,16 @@ module.exports = class File {
         this.getFileFromForm = this.getFileFromForm.bind(this)
     }
 
-    //TODO: remove req from arguments
+    /**
+     * @TODO remove req from arguments
+     */
     getFileFromForm(req, form) {
         return new Promise((resolve, reject) => {
             try {
                 form.on('fileBegin', (filename, file) => {
-                    //TODO: fix path concatenation, because file path must be already in this.location
+                    /**
+                     * @TODO fix path concatenation, because file path must be already in this.location
+                     */ 
                     file.path = path.join(this.location, filename+'.png')
                 })
                 form.on('end', () => {

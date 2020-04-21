@@ -22,14 +22,6 @@ app.use(cors(config.corsOptions))*/
 
 
 /**
- * Logging
- */
-/*const morgan = require('morgan')
-
-app.use(morgan('dev'))*/
-
-
-/**
  * Cookies
  */
 /*const cookierParser = require('cookie-parser')

@@ -1,11 +1,21 @@
 const db = require('./dbMain')
 
-exports.addOneProduct = async function addOneProduct(product) {
-    let { description, available } = product
+/**
+ * @TODO Automate process of creating queries text insead of plaintext query.text  
+ */
+
+/**
+ * @param {String} title
+ * @param {String} description
+ * @param {String} price
+ * @param {Boolean} available
+ * @returns {Promise.<Object>} query response
+ */
+exports.addOneProduct = async function addOneProduct({title, description, price, available}) {
     const query = {
-        text: `INSERT INTO products (description, available) 
-            VALUES ($1, $2)`,
-        values: [description, available],
+        text: `INSERT INTO products (title, description, price, available) 
+            VALUES ($1, $2, $3, $4)`,
+        values: [title, description, price, available],
     }
 
     return new Promise((resolve, reject) => {
@@ -21,10 +31,13 @@ exports.addOneProduct = async function addOneProduct(product) {
     })
 }
 
-exports.getOneProduct = async function getOneProduct(product) {
-    let { id } = product
+/**
+ * @param {Integer} id
+ * @returns {Promise.<Object>} query response
+ */
+exports.getOneProduct = async function getOneProduct(id) {
     const query = {
-        text: `SELECT (description, available) FROM products 
+        text: `SELECT (title, description, price, available) FROM products 
             WHERE id = $1`,
         values: [id],
     }
@@ -42,9 +55,12 @@ exports.getOneProduct = async function getOneProduct(product) {
     })
 }
 
+/**
+ * @returns {Promise.<Object>} query response
+ */
 exports.getAllProducts = async function getAllProducts() {
     const query = {
-        text: `SELECT (id, description, available) FROM products`,
+        text: `SELECT (id, title, description, price, available) FROM products`,
         values: '',
     }
 
