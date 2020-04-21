@@ -1,5 +1,5 @@
-exports.login = (req, res, next) => {
+// exports.login = (req, res, next) => {
     
-    res.statusCode = 200
-    res.json({success: true}) 
-}
+//     res.statusCode = 200
+//     res.json({success: true}) 
+// }

@@ -11,11 +11,8 @@ module.exports = class File {
     constructor(filename, content, location) {
         this.filename = filename
         this.content = content
-        if (location === path.basename(location))
-            this.location = location
-        else
-            this.location = path.join(__dirname, location)
-
+        this.location = location
+        
         this.saveFile = this.saveFile.bind(this)
         this.printContent = this.printContent.bind(this)
         this.getFileFromForm = this.getFileFromForm.bind(this)
@@ -23,23 +20,28 @@ module.exports = class File {
 
     //TODO: remove req from arguments
     getFileFromForm(req, form) {
-        try {
-            form.on('fileBegin', function(filename, file) {
-                //TODO: fix path concatenation, because file path must be already in this.location
-                //console.log('AAA', this.location)
-                file.path = path.join(this.location, filename)
-            })
-            form.on('end', function() {
-                return Promise.resolve()
-            })
-            form.parse(req, function (err, fields, files) {
-                if (err) {
-                    return Promise.reject(err)
-                } 
-            });
-        } catch (err) {
-            return Promise.reject(err)
-        }
+        return new Promise((resolve, reject) => {
+            try {
+                form.on('fileBegin', (filename, file) => {
+                    //TODO: fix path concatenation, because file path must be already in this.location
+                    file.path = path.join(this.location, filename+'.png')
+                })
+                form.on('end', () => {
+                    console.log('resolved')
+                    resolve()
+                })
+                form.parse(req, (err, fields, files) => {
+                    if (err) {
+                        console.log('rejected')
+                        reject(err)
+                    } 
+                });
+            } catch (err) {
+                console.log('rejected')
+                reject(err)
+            }
+        })
+        
     }
 
     saveFile() {

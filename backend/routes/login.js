@@ -1,11 +1,11 @@
-let express = require('express')
+// let express = require('express')
 
-let router = express.Router()
+// let router = express.Router()
 
-let controller = require('../controllers/loginController')
+// let controller = require('../controllers/loginController')
 
-let auth = require('../middlewares/auth')
+// let auth = require('../middlewares/auth')
 
-router.post('/login', auth.auth, controller.login)
+// router.post('/login', auth.auth, controller.login)
 
-module.exports = router
+// module.exports = router

@@ -2,3 +2,5 @@
 **/.vscode
 **/build/
 Agroshop-Frankfurt.pem
+**/files/
+**/config.js

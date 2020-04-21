@@ -1,4 +1,4 @@
-const FileStorage = require('../db/fileStorage')
+const FileStorage = require('../db/FileStorage')
 const fileStorage = new FileStorage()
 const File = require('../db/File')
 const path = require('path')
@@ -11,8 +11,8 @@ exports.saveFile = function saveFile(req, res, next) {
     file = new File("", "", path.join(__dirname, '../files'))
 
     file.getFileFromForm(req, form).then(
-        function onFullfillment() {
-            res.status(200).send('File saved')
+        function onResolved() {
+            res.status(200).send('File from form is saved')
             next()
         },
         function onRejected(err) {

@@ -64,8 +64,8 @@ app.get('*', function(req, res) {
  */
 //let http = require('http');
 //http.createServer(app).listen(80);
-const port = process.env.PORT || 80
+const {applicationStartPort} = config
 
-app.listen(port, () => {
-    console.log(`Server started and working on port ${port}`)
+app.listen(applicationStartPort, () => {
+    console.log(`Server started and working on port ${applicationStartPort}`)
 });
