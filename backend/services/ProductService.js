@@ -12,7 +12,7 @@ module.exports = class ProductService {
     /**
      * 
      * @param {Product} product
-     * @returns {Promise.<null>} 
+     * @returns {Promise.<Integer>} 
      */
     async addOneProduct(product) {
         if (!(product instanceof Product)) {
@@ -26,7 +26,7 @@ module.exports = class ProductService {
             let { title, description, available, price } = product.serializeToObject()
             let data = await this.db.addOneProduct({ title, description, available, price })
             if (data.status === 'success') {
-                return ''
+                return data.result
             } else {
                 throw new Error('Something wrong in addOneProduct query')
             }

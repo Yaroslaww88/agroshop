@@ -4,7 +4,8 @@ module.exports = class Product {
      * @param {String} description 
      * @param {Boolean} available 
      */
-    constructor( {title, description, price, available} ) {
+    constructor( {id = 0, title, description, price, available} ) {
+        this.id = id
         this.title = title
         this.description = description
         this.price = price
@@ -13,6 +14,7 @@ module.exports = class Product {
 
     serializeToJson = () => {
         return JSON.stringify({
+            id: this.id,
             title: this.title, 
             description: this.description, 
             price: this.price, 
@@ -22,6 +24,7 @@ module.exports = class Product {
 
     serializeToObject = () => {
         return {
+            id: this.id,
             title: this.title, 
             description: this.description, 
             price: this.price, 

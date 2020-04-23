@@ -14,7 +14,8 @@ const db = require('./dbMain')
 exports.addOneProduct = async function addOneProduct({title, description, price, available}) {
     const query = {
         text: `INSERT INTO products (title, description, price, available) 
-            VALUES ($1, $2, $3, $4)`,
+            VALUES ($1, $2, $3, $4)
+            RETURNING id`,
         values: [title, description, price, available],
     }
 
@@ -22,7 +23,7 @@ exports.addOneProduct = async function addOneProduct({title, description, price,
         db.query(query.text, query.values)
         .then(
             function onResolved(res) {
-                resolve({status: 'success', error: ''})
+                resolve({status: 'success', error: '', result: res.rows[0].id})
             },
             function onRejected(err) {
                 reject({status: 'unsuccess', error: err})
@@ -30,14 +31,6 @@ exports.addOneProduct = async function addOneProduct({title, description, price,
         )
     })
 }
-
-/*
-`SELECT row_to_json(row(TRIM(title), TRIM(description), TRIM(price), available))
-                FROM products 
-                WHERE id = $1`
-*/
-
-
 
 /**
  * @param {Integer} id

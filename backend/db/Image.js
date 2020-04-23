@@ -13,9 +13,9 @@
 //         this.content = content
 //         this.location = location
         
-//         this.saveFile = this.saveFile.bind(this)
-//         this.printContent = this.printContent.bind(this)
-//         this.getFileFromForm = this.getFileFromForm.bind(this)
+//         // this.saveFile = this.saveFile.bind(this)
+//         // this.printContent = this.printContent.bind(this)
+//         // this.getFileFromForm = this.getFileFromForm.bind(this)
 //     }
 
 //     /**
