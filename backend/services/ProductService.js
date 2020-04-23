@@ -31,7 +31,7 @@ module.exports = class ProductService {
                 throw new Error('Something wrong in addOneProduct query')
             }
         } catch(err) {
-            throw new Error(err)
+            throw err
         }
     }
 
@@ -55,21 +55,46 @@ module.exports = class ProductService {
                 throw new Error('Something wrong in addOneProduct query')
             }
         } catch(err) {
-            throw new Error(err)
+            throw err
         }
     }
 
+    /**
+     * 
+     * @returns {Array<Promise.<Product>>} 
+     */
     async getAllProducts() {
         try {
             let data = await this.db.getAllProducts()
             if (data.status === 'success') {
-                let products = data.result.rows
+                let products = []
+                for (let product of data.result) {
+                    products.push(new Product(product))
+                }
                 return products
             } else {
                 throw new Error('Something wrong in getAllProducts query')
             }
         } catch(err) {
-            throw new Error(err)
+            throw err
+        }
+    }
+
+    /**
+     * 
+     * @param {Integer} id
+     * @returns {Promise.<null>} 
+     */
+    async deleteOneProduct(id) {
+        try {
+            let data = await this.db.deleteOneProduct()
+            if (data.status === 'success') {
+                return ''
+            } else {
+                throw new Errror('Something wrong in deleteOneProduct query')
+            }
+        } catch(err) {
+            throw err
         }
     }
 }

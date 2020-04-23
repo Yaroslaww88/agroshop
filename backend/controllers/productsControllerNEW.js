@@ -34,7 +34,7 @@ exports.getOneProduct = async function getOneProduct(req, res, next) {
 
         let product = await productService.getOneProduct(id)
 
-        res.status(200).json({status: 'success', error: '', product: product.serializeToJson})
+        res.status(200).json({status: 'success', error: '', product: product})
     } catch(err) {
         console.log(err) 
         //next(err)
@@ -49,5 +49,17 @@ exports.getAllProducts = async function getAllProducts(req, res, next) {
     } catch(err) {
         console.log(err) 
         //next(err)
+    }
+}
+
+exports.deleteOneProduct = async function deleteOneProduct(req, res, next) {
+    try {
+        let id = req.params.id
+
+        await productService.deleteOneProduct(id)
+
+        res.status(200).json({status: 'success', error: ''})
+    } catch(err) {
+        console.log(err)
     }
 }

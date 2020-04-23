@@ -1,8 +1,8 @@
-const saveFileRouter = require('./saveFileRouter')
+const imagesRouter = require('./imagesRouter')
 const productsRouter = require('./productsRouter')
 
 module.exports = app => {
-    app.use('/api', saveFileRouter)
+    app.use('/api', imagesRouter)
     app.use('/api', productsRouter)
     app.use('*', (req, res, next) => (console.log("* get", req.body)))
 }
