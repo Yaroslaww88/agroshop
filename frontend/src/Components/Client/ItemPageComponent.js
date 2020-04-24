@@ -1,55 +1,41 @@
 import React, { useState, useEffect } from 'react';
-import CardsGallery from './CardsGallery';
 import { Button, ButtonGroup, Container, Row, Col } from 'reactstrap';
+import { fetchProductById } from '../utils'
 
 const ItemPageComponent = (props) => {
 
-    const [item, setItem] = useState({})
-
-    console.log(props.match)
+    const [product, setProduct] = useState({})
 
     useEffect(() => {
-
-        console.log(props)
-
-        const fetchData = async () => {
-            let response = await fetch(`/api/products/${props.match.params.id}`, {
-                method: 'GET',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                }
-            })
-
-            try {
-                let data = await response.json()
-
-                setItem(data.products)
-            } catch (ex) {
-                console.log('error: ', ex)
-            }
+        async function __fetchProductById() {
+            let response = await fetchProductById(props.match.params.id)
+            setProduct(response)
+            console.log(response)
         }
 
-        fetchData()
+        __fetchProductById()
     }, []);
 
-    const {name, description, in_stock, id} = item
+    let title = product.title || 'Name is unavailable'
+    let description = product.description || 'Description is unavailable'
+    let available = product.available || 'In_stock is unavailable'
+    let price = product.price || 'Price is not set'
+    let id = product.id || -1
 
     return (
 
         <Container>
             <Row>
                 <Col>
-                    <h1>{name}</h1>
+                    <h1>{title}</h1>
                     <h1>{description}</h1>
-                    <h1>{in_stock}</h1>
+                    <h1>{available}</h1>
+                    <h1>{price}</h1>
                     <h1>{id}</h1>
                 </Col>
             </Row>
         </Container>
     );
-
-    return (<h1>1</h1>)
 }
 
 export default ItemPageComponent;

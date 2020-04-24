@@ -43,13 +43,12 @@ mountRoutes(app)
 /**
  * Static
  */
-/*const path = require('path')
+const path = require('path')
 
-app.use(express.static(path.join(__dirname, '../frontend/build')))
-app.get('*', function(req, res) {
+app.use(express.static(path.join(__dirname, '../images')))
+/*app.get('*', function(req, res) {
   res.sendFile(path.join(__dirname, '../frontend/build/index.html'))
 })*/
-
 
 /**
  * Go live

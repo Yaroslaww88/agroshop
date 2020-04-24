@@ -1,5 +1,4 @@
-const path = require('path')
-const uploadsPath = path.join(__dirname, '../images') 
+const imagesFolder = require('../config').imagesFolder
 
 const dbQueries = require('../db/dbQueries')
 
@@ -13,7 +12,7 @@ const productService = new ProductService(dbQueries)
  * Init image service which saves images
  */
 const ImageService = require('../services/ImageService')
-const imageService = new ImageService(uploadsPath)
+const imageService = new ImageService(imagesFolder)
 
 const Product = require('../db/Product')
 
@@ -29,7 +28,7 @@ exports.addOneProduct = async function addOneProduct(req, res, next) {
          * Set folder where to upload images !NOTE this is temporary path. After adding product to db this file will be moved
          */
         form.on('fileBegin', (filename, file) => {
-            file.path = path.join(__dirname, `../images/${filename}_${counter}.png`)
+            file.path = `${imagesFolder}/${filename}_${counter}.png`
             counter++
         })
 
@@ -50,8 +49,8 @@ exports.addOneProduct = async function addOneProduct(req, res, next) {
 
         res.status(200).json({status: 'success', error: ''})
     } catch(err) {
-        console.log(err)
-        //next(err)
+        console.error(err)
+        res.status(500).json({status: 'unsuccess', error: err})
     }
 }
 
@@ -63,7 +62,8 @@ exports.getOneProduct = async function getOneProduct(req, res, next) {
 
         res.status(200).json({status: 'success', error: '', product: product})
     } catch(err) {
-        console.log(err) 
+        console.error(err) 
+        res.status(500).json({status: 'unsuccess', error: err})
         //next(err)
     }
 }
@@ -74,8 +74,8 @@ exports.getAllProducts = async function getAllProducts(req, res, next) {
 
         res.status(200).json({status: 'success', error: '', products: products})
     } catch(err) {
-        console.log(err) 
-        //next(err)
+        console.error(err) 
+        res.status(500).json({status: 'unsuccess', error: err})
     }
 }
 
@@ -87,6 +87,7 @@ exports.deleteOneProduct = async function deleteOneProduct(req, res, next) {
 
         res.status(200).json({status: 'success', error: ''})
     } catch(err) {
-        console.log(err)
+        console.error(err)
+        res.status(500).json({status: 'unsuccess', error: err})
     }
 }

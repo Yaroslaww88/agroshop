@@ -28,7 +28,9 @@ exports.addOneProduct = async function addOneProduct({title, description, price,
             function onRejected(err) {
                 reject({status: 'unsuccess', error: err})
             }
-        )
+        ).catch((err) => {
+            reject(err)
+        })
     })
 }
 
@@ -40,7 +42,7 @@ exports.getOneProduct = async function getOneProduct(id) {
     const query = {
         text: `SELECT row_to_json(row)
                 FROM (
-                    SELECT title, description, price, available,
+                    SELECT id, title, description, price, available,
                     TRIM(trailing ' ' from title) as title,
                     TRIM(trailing ' ' from description) as description,
                     TRIM(trailing ' ' from price) as price
@@ -60,7 +62,9 @@ exports.getOneProduct = async function getOneProduct(id) {
             function onRejected(err) {
                 reject({status: 'unsuccess', error: err})
             }
-        )
+        ).catch((err) => {
+            reject(err)
+        })
     })
 }
 
@@ -93,7 +97,9 @@ exports.getAllProducts = async function getAllProducts() {
             function onRejected(err) {
                 reject({status: 'unsuccess', error: err})
             }
-        )
+        ).catch((err) => {
+            reject(err)
+        })
     })
 }
 
@@ -113,6 +119,8 @@ exports.deleteOneProduct = async function deleteOneProduct(id) {
             function onRejected(err) {
                 reject({status: 'unsuccess', error: err})
             }
-        )
+        ).catch((err) => {
+            reject(err)
+        })
     })
 }

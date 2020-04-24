@@ -1,8 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import Main from './Main'
-import MainAdmin from '../Admin/MainAdmin'
-import AboutComponent from './AboutComponent'
+import IndexRoutesClient from './Client/IndexRoutesClient'
+import MainAdmin from './Admin/MainAdmin'
 import { CookiesProvider } from 'react-cookie'
 
 const App = () => {
@@ -11,7 +10,7 @@ const App = () => {
       <BrowserRouter>
         <Switch>
           <Route exact path="/admin" component={MainAdmin}/>
-          <Route path="/" component={Main}/>
+          <Route path="/" component={IndexRoutesClient}/>
         </Switch>
       </BrowserRouter>
     </CookiesProvider>
