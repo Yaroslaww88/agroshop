@@ -1,6 +1,6 @@
 const router = require('express').Router()
 
-const controller = require('../controllers/productsControllerNEW')
+const controller = require('../controllers/productsController')
 const authAdminMiddleware = require('../middlewares/authAdminMiddleware')
 
 router.get('/products/all', controller.getAllProducts)

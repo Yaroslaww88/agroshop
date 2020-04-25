@@ -1,4 +1,33 @@
-exports.fetchAllProducts = async function fetchAllProducts() {
+/**
+ * @param {*} response
+ * @param {String} whatToReturn - what field add to result(if needed)
+ */
+export async function parseResponse(response, whatToReturn = '') {
+    try {
+        let data = await response.json()
+        if (data.status === 'success') {
+            let result = {
+                status: 'success',
+                error: ''
+            }
+            if (whatToReturn) {
+                result[whatToReturn] = data[whatToReturn]
+            }
+            return result
+        } else {
+            throw new Error(data.error)
+        }
+    } catch(err) {
+        /*let result = {
+            status: 'unsuccess',
+            error: err
+        }
+        return result*/
+        throw err
+    }
+}
+
+export async function fetchAllProducts() {
     let response = await fetch('/api/products/all', {
         method: 'GET',
         headers: {
@@ -7,19 +36,14 @@ exports.fetchAllProducts = async function fetchAllProducts() {
         }
     })
 
-    try {
-        let data = await response.json()
-        return data.products
-    } catch (err) {
-        throw err
-    }
+    return parseResponse(response, 'products')
 }
 
 function importAll(r) {
     return r.keys().map(r);
 }
 
-exports.getImagesUrlById = function getImagesUrlById(id) {
+export function getImagesUrlById(id) {
     let files = importAll(require.context('../../public/img/', true, /.png$/))
     return files
 }
@@ -27,7 +51,7 @@ exports.getImagesUrlById = function getImagesUrlById(id) {
 /**
  * @param {Integer} id
  */
-exports.fetchProductById = async function fetchProductById(id) {
+export async function fetchProductById(id) {
     let response = await fetch(`/api/products/${id}`, {
         method: 'GET',
         headers: {
@@ -36,20 +60,14 @@ exports.fetchProductById = async function fetchProductById(id) {
         }
     })
 
-    try {
-        let data = await response.json()
-
-        return data.product
-    } catch (err) {
-        throw err
-    }
+    return parseResponse(response, 'product')
 }
 
 /**
  * @param {String} login
  * @param {String} password
  */
-exports.fetchAdminLogin = async function fetchAdminLogin(login, password) {
+export async function fetchAdminLogin(login, password) {
     let encode = btoa(`${login}:${password}`)
 
     let response = await fetch('/api/admin/login', {
@@ -62,19 +80,10 @@ exports.fetchAdminLogin = async function fetchAdminLogin(login, password) {
         }
     })
 
-    try {
-        let data = await response.json()
-        if (!data.error) {
-            return ({status: 'success', error: ''})
-        } else {
-            throw new Error(data.error)
-        }
-    } catch (err) {
-        throw err
-    }
+    return parseResponse(response)
 }
 
-exports.fetchAdminLogout = async function fetchAdminLogout() {
+export async function fetchAdminLogout() {
     let response = await fetch('/api/admin/logout', {
         method: 'POST',
         headers: {
@@ -83,14 +92,11 @@ exports.fetchAdminLogout = async function fetchAdminLogout() {
         }
     })
 
-    try {
-        let data = await response.json()
-        if (!data.error) {
-            return ({status: 'success', error: ''})
-        } else {
-            throw new Error(data.error)
-        }
-    } catch (err) {
-        throw err
-    }
+    return parseResponse(response)
 }
+
+/*parseResponse = this.parseResponse.bind(this)
+fetchAllProducts = this.fetchAllProducts.bind(this)
+fetchProductById = this.fetchProductById.bind(this)
+fetchAdminLogin = this.fetchAdminLogin.bind(this)
+fetchAdminLogout = this.fetchAdminLogout.bind(this)*/

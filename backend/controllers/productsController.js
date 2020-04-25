@@ -1,132 +1,94 @@
-// const fs = require('fs')
-// const path = require('path')
+const imagesFolder = require('../config').imagesFolder
 
-// exports.getAllProducts = async (req, res, next) => {
-//     let products = await Products.find({})
+const dbQueries = require('../db/dbQueries')
 
-//     res.statusCode = 200
-//     res.json({products: products})
-// }
+/**
+ * Init products service to communicate with it insead of database itself
+ */
+const ProductService = require('../services/ProductService')
+const productService = new ProductService(dbQueries)
 
-// exports.getOneProduct = async (req, res, next) => {
-//     let id = req.params.id
-//     if (!id) {
-//         res.statusCode = 400
-//         res.json({products: [], error: 'no ID provided'})
-//     }
+/**
+ * Init image service which saves images
+ */
+const ImageService = require('../services/ImageService')
+const imageService = new ImageService(imagesFolder)
 
-//     let product = await Products.findById(id)
+const Product = require('../db/Product')
 
-//     res.statusCode = 200
-//     res.json({products: product})
-// }
+const formidable = require('formidable');
 
-// var _getAllFilesFromFolder = function(dir) {
+exports.addOneProduct = async function addOneProduct(req, res, next) {
+    try {
+        const form = formidable({ multiples: true })
 
-//     var filesystem = require("fs");
-//     var results = [];
+        let counter = 0
 
-//     filesystem.readdirSync(dir).forEach(function(file) {
+        /**
+         * Set folder where to upload images !NOTE this is temporary path. After adding product to db this file will be moved
+         */
+        form.on('fileBegin', (filename, file) => {
+            file.path = `${imagesFolder}/${filename}_${counter}.png`
+            counter++
+        })
 
-//         file = dir+'/'+file;
-//         var stat = filesystem.statSync(file);
+        form.parse(req, async (err, fields, files) => {
+            if (err) {
+                throw err
+            } else {
+                console.log(fields.product)
+                let product = new Product(JSON.parse(fields.product))
 
-//         if (stat && stat.isDirectory()) {
-//             results = results.concat(_getAllFilesFromFolder(file))
-//         } else results.push(file);
+                let id = await productService.addOneProduct(product)
 
-//     });
+                /**
+                 * Move images from temporary folder /images to subdir /{id} Name will be {id}_{counter}.png 
+                 */
+                imageService.addImages(id, files)
+            }
+        });   
 
-//     return results;
+        res.status(200).json({status: 'success', error: ''})
+    } catch(err) {
+        console.error(err)
+        res.status(500).json({status: 'unsuccess', error: err})
+    }
+}
 
-// };
+exports.getOneProduct = async function getOneProduct(req, res, next) {
+    try {
+        let id = req.params.id
 
-// exports.postProducts = async (req, res, next) => {
-//     let product = req.body
+        let product = await productService.getOneProduct(id)
 
-//     console.log('Product in postProduct: ', product)
+        res.status(200).json({status: 'success', error: '', product: product})
+    } catch(err) {
+        console.error(err) 
+        res.status(500).json({status: 'unsuccess', error: err})
+        //next(err)
+    }
+}
 
-//     try {
-//         let createdProduct = await Products.create(product)
-//         let file = req.file
-//         let oldPath = path.join(__dirname, '..', '..', 'frontend', 'public', 'img', file.originalname)
-//         let newPath = path.join(__dirname, '..', '..', 'frontend', 'public', 'img', createdProduct.id.toString() + '.png')
-//         console.log("PATH:", oldPath, " -> ", newPath)
-//         console.log("NAME:", file.originalname)
-//         console.log("ALL FILES:", _getAllFilesFromFolder(path.join(__dirname, '..', '..', 'frontend', 'public')))
-//         if (fs.existsSync(path.join(__dirname, '..', '..', 'frontend', 'public', '1ycO6.jpg'))) {
-//             console.log('The path exists.');
-//           }
-//         fs.renameSync(oldPath, newPath, function(err) {
-//             if (err) throw new Error('error while renaming file in /public')
-//         })
-//         oldPath = path.join(__dirname, '..', '..', 'frontend', 'build', 'img', file.originalname)
-//         newPath = path.join(__dirname, '..', '..', 'frontend', 'build', 'img', createdProduct.id.toString() + '.png')
-//         fs.renameSync(oldPath, newPath, function(err) {
-//             if (err) throw new Error('error while renaming file in /build')
-//         })
-//         res.json({success: true})
-//         res.statusCode = 200
-//     } catch (ex) {
-//         console.log(ex);
-//         res.json({error: ex})
-//         res.statusCode = 400
-//     }
-// }
+exports.getAllProducts = async function getAllProducts(req, res, next) {
+    try {
+        let products = await productService.getAllProducts()
 
-// exports.deleteAllProducts = async (req, res, next) => {
-//     try {
-//         await Products.deleteMany({})
-//     } catch (ex) {
-//         res.statusCode = 400
-//         res.json({error: ex})
-//         console.log(ex);
-//     }
+        res.status(200).json({status: 'success', error: '', products: products})
+    } catch(err) {
+        console.error(err) 
+        res.status(500).json({status: 'unsuccess', error: err})
+    }
+}
 
-//     res.statusCode = 200
-//     res.json({success: true})
-// }
+exports.deleteOneProduct = async function deleteOneProduct(req, res, next) {
+    try {
+        let id = req.params.id
 
+        await productService.deleteOneProduct(id)
 
-// exports.deleteOneProduct = async (req, res, next) => {
-//     try {
-//         let id = req.params.id
-//         if (id) {
-//             await Products.findByIdAndDelete(id, req.body.product)
-//             fs.unlinkSync(path.join(__dirname, `/../../frontend/public/img/${id}.png`))
-//             fs.unlinkSync(path.join(__dirname, `/../../frontend/build/img/${id}.png`))
-//         } else {
-//             console.log('no id in deleteOneProduct')
-//             res.statusCode = 404
-//             res.json({success: false, error: 'Empty id of deleted product'})
-//         }
-//     } catch (ex) {
-//         res.statusCode = 400
-//         res.json({error: ex})
-//         console.log(ex);
-//     }
-
-//     res.statusCode = 200
-//     res.json({success: true})
-// } 
-
-// exports.updateOneProduct = async (req, res, next) => {
-//     try {
-//         let id = req.params.id
-//         if (!id) {
-//             res.statusCode = 404
-//             res.json({success: false, error: 'Empty id of deleted product'})
-//         }
-        
-//         let updatedProduct = await Products.findOneAndUpdate(id, req.body)
-//         /*let file = req.file
-//         let path = file.path
-//         let newPath = path.substring(0, path.indexOf(file.filename)) + createdProduct.id.toString() + '.png'*/
-//         res.statusCode = 200
-//         res.json({success: true})
-//     } catch (ex) {
-//         res.statusCode = 400
-//         res.json({error: ex})
-//         console.log(ex);
-//     }
-// } 
+        res.status(200).json({status: 'success', error: ''})
+    } catch(err) {
+        console.error(err)
+        res.status(500).json({status: 'unsuccess', error: err})
+    }
+}

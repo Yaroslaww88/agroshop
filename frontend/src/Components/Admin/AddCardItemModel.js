@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
 import AddCarditemForm from './AddItemCardForm'
 
-const AddCarditemModel = ({onSubmit}) => {
+const AddCarditemModel = ({ onSubmit }) => {
 
   const [modal, setModal] = useState(false);
 
@@ -25,7 +25,7 @@ const AddCarditemModel = ({onSubmit}) => {
         <Modal isOpen={modal} toggle={toggle}>
             <ModalHeader toggle={toggle}>Add item</ModalHeader>
             <ModalBody>
-                <AddCarditemForm onSubmit={(item) => {onSubmit(item); toggle()}}/>
+                <AddCarditemForm onSubmit={(product, image) => {onSubmit(product, image); toggle()}}/>
             </ModalBody>
         </Modal>
     </div>

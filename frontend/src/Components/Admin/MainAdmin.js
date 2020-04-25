@@ -11,34 +11,34 @@ const types = {
 
 const MainAdmin = ({ history }) => {
 
-    const [status, setStatus] = useState(0)
     const [cookies, setCookie, removeCookie] = useCookies('')
+    const [status, setStatus] = useState(cookies.user ? types.SUCCESS : types.UNSUCCESS)
 
-    const onLogin = (login, password) => {
+    const hangleLogin = async (login, password) => {
         try {
             await fetchAdminLogin(login, password)
-            window.location.reload(); 
+            setStatus(types.SUCCESS)
         } catch(err) {
             setStatus(types.UNSUCCESS)
         }
     } 
 
-    const onLogout = () => {
+    const hangleLogout = async () => {
         try {
             await fetchAdminLogout()
-            window.location.reload(); 
+            setStatus(types.UNSUCCESS)
         } catch(err) {
             setStatus(types.UNSUCCESS)
         }
     } 
 
     return (
-        <div>
-            {status === types.SUCCESS ? 
-                <AdminPage onLogout={onLogout}/>
-            : <LoginPage onLogin={onLogin}/>}
+        <>
+            {status ? 
+                <AdminPage hangleLogout={hangleLogout}/>
+            : <LoginPage hangleLogin={hangleLogin}/>}
             
-        </div>
+        </>
     );
 }
 

@@ -13,7 +13,7 @@ const GaleryViewToggler = (props) => {
 
     const _handleToggle = () => {
         setSelected(!selected | 0) //convert from Boolean to Integer
-        handleToggle(!selected | 0)
+        handleToggle()
     }
 
     return (

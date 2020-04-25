@@ -1,11 +1,8 @@
-// let express = require('express')
+const router = require('express').Router()
 
-// let router = express.Router()
+const controller = require('../controllers/loginController')
 
-// let controller = require('../controllers/loginController')
+router.post('/admin/login', controller.adminLogin)
+router.post('/admin/logout', controller.adminLogout)
 
-// let auth = require('../middlewares/auth')
-
-// router.post('/login', auth.auth, controller.login)
-
-// module.exports = router
+module.exports = router

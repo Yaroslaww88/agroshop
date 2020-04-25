@@ -1,9 +1,5 @@
 const config = require('./config')
 
-/**
- * DB initialization
- */
-
 
 /**
  * Set up
@@ -12,22 +8,32 @@ const express = require('express')
 
 const app = express();
 
+/**
+ * Logging
+ */
+const morgan = require('morgan')
+
+app.use(morgan('dev'))
+
 
 /**
  * Cors
  */
-/*const cors = require('cors')
+const cors = require('cors')
 
-app.use(cors(config.corsOptions))*/
+app.use(cors(config.corsOptions))
 
 
 /**
  * Cookies
  */
-/*const cookierParser = require('cookie-parser')
+const cookierParser = require('cookie-parser')
 
-app.use(cookierParser(config.cookieSecret))*/
+app.use(cookierParser(config.cookieSecret))
 
+/**
+ * Body parser
+ */
 const bodyParser = require('body-parser')
 
 app.use(bodyParser.json())
@@ -38,7 +44,6 @@ app.use(bodyParser.json())
  */
 const mountRoutes = require('./routes/indexRouter')
 mountRoutes(app)
-
 
 /**
  * Static

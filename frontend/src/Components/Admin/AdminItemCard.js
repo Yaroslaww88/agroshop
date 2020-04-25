@@ -5,40 +5,39 @@ import {
   CardTitle, Button, ButtonToggle
 } from 'reactstrap'
 import AddItemCardForm from './AddItemCardForm'
+import { getImagesUrlById } from '../utils'
 
-const ItemCard = ({allItemValue, onDelete, onSubmitEdit}) => {
+const AdminItemCard = ({ history, product, handleEdition, handleDeletion }) => {
 
-    let name = allItemValue.name || 'Name is unavailable'
-    let description = allItemValue.description || 'Description is unavailable'
-    let in_stock = allItemValue.in_stock || 'In_stock is unavailable'
-    let id = allItemValue._id || -1
+    let title = product.title || 'Name is unavailable'
+    let description = product.description || 'Description is unavailable'
+    let available = product.available || 'In_stock is unavailable'
+    let price = product.price || 'Price is not set'
+    let id = product.id || -1
 
+    const url = getImagesUrlById(id)
 
-    let url = process.env.PUBLIC_URL + '/img/' + id + '.png'
-    console.log("url:", url)
+    // const edit = () => {
+    //     if (id !== -1) {
+    //         let item = {name, description, in_stock, id}
 
-    const edit = () => {
-        if (id !== -1) {
-            let item = {name, description, in_stock, id}
+    //         console.log('item: ', item)
 
-            console.log('item: ', item)
+    //         onEdit(item)
+    //     } else {
+    //         console.log('AdminItemCard id is unavailable')
+    //     }
+    // }
 
-            onEdit(item)
-        } else {
-            console.log('AdminItemCard id is unavailable')
-        }
-    }
+    // const [showForm, setShowForm] = useState(false)
 
-    const [showForm, setShowForm] = useState(false)
+    // const onSumbitForm = (item) => {
+    //     onSubmitEdit(item)
+    // } 
 
-    const onSumbitForm = (item) => {
-        item.id = id
-        onSubmitEdit(item)
-    } 
-
-    const onEdit = () => {
-        setShowForm(!showForm)
-    }
+    // const onEdit = () => {
+    //     setShowForm(!showForm)
+    // }
 
     return (
         <div class="card flex-row flex-wrap">
@@ -46,22 +45,13 @@ const ItemCard = ({allItemValue, onDelete, onSubmitEdit}) => {
                 <img className="header-img" src={url} alt="image"/>
             </div>
             <div class="card-block px-2">
-                <CardTitle> {name} </CardTitle>
+                <CardTitle> {title} </CardTitle>
                 <CardText> {description} </CardText>
-                <Button onClick={() => onDelete(id)}>X</Button>
-                <Button onClick={onEdit}>Edit</Button>
-                {showForm === true ? 
-                    <AddItemCardForm initDescription={description} initName={name} initInStock={in_stock} onSubmit={onSumbitForm}/> 
-                : null}
+                <Button onClick={handleDeletion}>X</Button>
+                <Button onClick={handleEdition}>Edit</Button>
             </div>
         </div>
     )
-  
 };
 
-ItemCard.propTypes = {
-    onDelete: PropTypes.func,
-    onEdit: PropTypes.func
-}
-
-export default ItemCard;
+export default AdminItemCard;
