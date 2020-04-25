@@ -44,3 +44,53 @@ exports.fetchProductById = async function fetchProductById(id) {
         throw err
     }
 }
+
+/**
+ * @param {String} login
+ * @param {String} password
+ */
+exports.fetchAdminLogin = async function fetchAdminLogin(login, password) {
+    let encode = btoa(`${login}:${password}`)
+
+    let response = await fetch('/api/admin/login', {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': `Basic ${encode}`
+        }
+    })
+
+    try {
+        let data = await response.json()
+        if (!data.error) {
+            return ({status: 'success', error: ''})
+        } else {
+            throw new Error(data.error)
+        }
+    } catch (err) {
+        throw err
+    }
+}
+
+exports.fetchAdminLogout = async function fetchAdminLogout() {
+    let response = await fetch('/api/admin/logout', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        }
+    })
+
+    try {
+        let data = await response.json()
+        if (!data.error) {
+            return ({status: 'success', error: ''})
+        } else {
+            throw new Error(data.error)
+        }
+    } catch (err) {
+        throw err
+    }
+}

@@ -2,26 +2,41 @@ import React, { Component, useState, useEffect } from 'react'
 import LoginPage from './LoginPage'
 import AdminPage from './AdminPage'
 import { useCookies } from 'react-cookie'
+import { fetchAdminLogin, fetchAdminLogout } from '../utils'
 
-const MainAdmin = ({history}) => {
+const types = {
+    SUCCESS: 1,
+    UNSUCCESS: 0
+}
 
-    const [reload, setReload] = useState(false)
+const MainAdmin = ({ history }) => {
+
+    const [status, setStatus] = useState(0)
     const [cookies, setCookie, removeCookie] = useCookies('')
 
-    const onLogIn = () => {
-        window.location.reload(); 
+    const onLogin = (login, password) => {
+        try {
+            await fetchAdminLogin(login, password)
+            window.location.reload(); 
+        } catch(err) {
+            setStatus(types.UNSUCCESS)
+        }
     } 
 
-    const onLogOut = () => {
-        removeCookie('user')
-        window.location.reload(); 
+    const onLogout = () => {
+        try {
+            await fetchAdminLogout()
+            window.location.reload(); 
+        } catch(err) {
+            setStatus(types.UNSUCCESS)
+        }
     } 
 
     return (
         <div>
-            {cookies.user ? 
-                <AdminPage onLogOut={onLogOut}/>
-            : <LoginPage onLogIn={onLogIn}/>}
+            {status === types.SUCCESS ? 
+                <AdminPage onLogout={onLogout}/>
+            : <LoginPage onLogin={onLogin}/>}
             
         </div>
     );
