@@ -6,8 +6,9 @@ import {
 } from 'reactstrap'
 import AddItemCardForm from './AddItemCardForm'
 import { getImagesUrlById } from '../utils'
+import EditProductDropdown from './EditProductDropdown'
 
-const AdminItemCard = ({ history, product, handleEdition, handleDeletion }) => {
+const AdminItemCard = ({ product, handleDropdownClick, ...props }) => {
 
     let title = product.title || 'Name is unavailable'
     let description = product.description || 'Description is unavailable'
@@ -17,27 +18,9 @@ const AdminItemCard = ({ history, product, handleEdition, handleDeletion }) => {
 
     const url = getImagesUrlById(id)
 
-    // const edit = () => {
-    //     if (id !== -1) {
-    //         let item = {name, description, in_stock, id}
-
-    //         console.log('item: ', item)
-
-    //         onEdit(item)
-    //     } else {
-    //         console.log('AdminItemCard id is unavailable')
-    //     }
-    // }
-
-    // const [showForm, setShowForm] = useState(false)
-
-    // const onSumbitForm = (item) => {
-    //     onSubmitEdit(item)
-    // } 
-
-    // const onEdit = () => {
-    //     setShowForm(!showForm)
-    // }
+    function __handleDropdownClick (option) {
+        handleDropdownClick(option, id)
+    }
 
     return (
         <div class="card flex-row flex-wrap">
@@ -47,8 +30,11 @@ const AdminItemCard = ({ history, product, handleEdition, handleDeletion }) => {
             <div class="card-block px-2">
                 <CardTitle> {title} </CardTitle>
                 <CardText> {description} </CardText>
-                <Button onClick={handleDeletion}>X</Button>
-                <Button onClick={handleEdition}>Edit</Button>
+                <EditProductDropdown
+                    title='edit item'
+                    handleDropdownClick={__handleDropdownClick}
+                    {...props}
+                />
             </div>
         </div>
     )

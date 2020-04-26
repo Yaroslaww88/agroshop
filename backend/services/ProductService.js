@@ -87,7 +87,7 @@ module.exports = class ProductService {
      */
     async deleteOneProduct(id) {
         try {
-            let data = await this.db.deleteOneProduct()
+            let data = await this.db.deleteOneProduct(id)
             if (data.status === 'success') {
                 return ''
             } else {

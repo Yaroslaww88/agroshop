@@ -5,6 +5,7 @@ import AddCardItemModel from './AddCardItemModel'
 import { fetchAdminLogout, fetchAllProducts } from '../utils'
 import { deleteOneProductById, postOneProduct } from './adminUtils'
 import AdminItemCard from './AdminItemCard'
+import AdminHeader from './AdminHeader'
 
 const AdminPage = (props) => {
 
@@ -23,18 +24,7 @@ const AdminPage = (props) => {
         _fetchProducts()
     }, [reload])
 
-    let logout = () => {
-        props.handleLogout();
-    }
-
-    // let deleteItem = async (id) => {
-    //     try {
-    //         await deleteOneProductById(id)
-    //         setReload(!reload)
-    //     } catch(err) {
-            
-    //     }
-    // }
+    const { handleLogout } = props 
 
     // let editItem = async (item) => {
 
@@ -77,13 +67,36 @@ const AdminPage = (props) => {
         }
     } 
 
-    let handleDeletion = () => {
-        console.log('DELETED')
+    async function handleDeleting(id) {
+        console.log('DELETE', id)
+        try {
+            await deleteOneProductById(id)
+            setReload(!reload)
+        } catch(err) {
+            
+        }
     }
 
-    
-    let handleEdition = () => {
-        console.log('EDITED')
+    function handleEditing(id) {
+        console.log('EDIT', id)
+    }
+
+    function handleDropdownClick(dropdownOption, id) {
+        switch (dropdownOption) {
+            case 'edit':
+                handleEditing(id)
+                break
+            case 'delete':
+                handleDeleting(id)
+                break
+            default:
+                console.error(`Unexpextable dropdown option: ${dropdownOption}`)
+        }
+    }
+
+    function getDropdownOptions() {
+        let options = ['edit', 'delete']
+        return options
     }
 
     function getProductCards() {
@@ -92,8 +105,8 @@ const AdminPage = (props) => {
         for (let product of products) {
             let productCard = (<AdminItemCard 
                                     product={product}
-                                    handleEdition={handleEdition}
-                                    handleDeletion={handleDeletion} 
+                                    handleDropdownClick={handleDropdownClick}
+                                    options={getDropdownOptions()}
                                     {...props}/>)
             productCards.push(productCard)
         }
@@ -103,14 +116,7 @@ const AdminPage = (props) => {
     return (
         <>
             <Container>
-                <Row>
-                    <Col>
-                        <h1>Hello from admin</h1>
-                    </Col>
-                    <Col>
-                        <Button onClick={logout}>Log out</Button>
-                    </Col>
-                </Row>
+                <AdminHeader handleLogout={handleLogout}/>
                 <Row>
                     <Col>
                         <AddCardItemModel onSubmit={postItem}/>
