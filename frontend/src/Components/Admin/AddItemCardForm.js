@@ -1,31 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Form, FormGroup, Label, Input, FormText, Col } from 'reactstrap';
 
 const AdditemCardForm = ({ onSubmit }) => {
 
     const [product, setProduct] = useState({})
     const [image, setImage] = useState('')
+    const { title = '', description = '', available = false } = product
 
     const submit = () => {
+        console.log('image', image)
         onSubmit(product, image);
     }
 
     const handleImageUpload = (e) => {
         e.preventDefault()
         setImage(e.target.files[0])
+        console.log(e.target.files)
     }
 
     const handleProductChange = (e) => {
-        e.preventDefault()
-        console.log(e.target.value, e.target.name)
-        const { name, value } = e.target;
+        let { name, value } = e.target
+        // Because checkbox return 'on' in e.target.value
+        if (name === 'available') {
+            value = e.target.checked
+        }
         setProduct({
             ...product,
             [name]: value
         })
     }
 
-    const { title = '', description = '', available = '' } = product
+    useEffect(() => {
+       console.log('useEffect', available) 
+    }, [available])
 
     return (
         <Form>
@@ -63,14 +70,13 @@ const AdditemCardForm = ({ onSubmit }) => {
                 />
             </FormGroup>
             <FormGroup check>
-                <Label check>
                 <Input 
                     type="checkbox" 
-                    checked={available} 
+                    name="available" 
+                    id="available-id" 
                     onChange={handleProductChange}
                 />
-                    Available
-                </Label>
+                <Label for="available-id" check>Available</Label>
             </FormGroup>
             <Button type="button" onClick={submit}>
                 Submit

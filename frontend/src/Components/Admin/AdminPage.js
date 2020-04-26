@@ -24,7 +24,7 @@ const AdminPage = (props) => {
         _fetchProducts()
     }, [reload])
 
-    const { handleLogout } = props 
+    const { history, handleLogout } = props 
 
     // let editItem = async (item) => {
 
@@ -58,9 +58,10 @@ const AdminPage = (props) => {
     //     }
     // }
 
-    let postItem = async (product) => {
+    let postItem = async (product, image) => {
+        console.log('send images', image)
         try {
-            await postOneProduct(product)
+            await postOneProduct(product, image)
             setReload(!reload)
         } catch(err) {
 
@@ -78,7 +79,7 @@ const AdminPage = (props) => {
     }
 
     function handleEditing(id) {
-        console.log('EDIT', id)
+        history.push(`/admin/${id}`)
     }
 
     function handleDropdownClick(dropdownOption, id) {

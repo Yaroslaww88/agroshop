@@ -16,6 +16,7 @@ export async function deleteOneProductById(id) {
 export async function postOneProduct(product, image) { 
     let formData = new FormData()
     formData.append('product', JSON.stringify(product))
+    console.log('ímage to send', image)
     if (image) {
         formData.append('image', image)
     }

@@ -39,12 +39,26 @@ export async function fetchAllProducts() {
     return parseResponse(response, 'products')
 }
 
-function importAll(r) {
-    return r.keys().map(r);
+function isValidPathForID (path, id) {
+    let parsed = path.split('/')
+    if (parseInt(parsed[1]) === id)
+        return true
+    else
+        return false
+}
+
+function importAll(r, id) {
+    let files = []
+    for (let file of r.keys()) {
+        if (isValidPathForID(file, id))
+            files.push(r(file))
+    }
+    return files
 }
 
 export function getImagesUrlById(id) {
-    let files = importAll(require.context('../../public/img/', true, /.png$/))
+    let files = importAll(require.context('../../public/img/', true, /.png$/), id)
+    console.log('files', files)
     return files
 }
 

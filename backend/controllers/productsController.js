@@ -32,11 +32,18 @@ exports.addOneProduct = async function addOneProduct(req, res, next) {
             counter++
         })
 
+        form.on('error', (err) => {throw err});
+
+        form.on('aborted', () => {console.error('aborted in image parsing')});
+
+        form.on('end', () => {
+            res.status(200).json({status: 'success', error: ''})
+        })
+
         form.parse(req, async (err, fields, files) => {
             if (err) {
                 throw err
             } else {
-                console.log(fields.product)
                 let product = new Product(JSON.parse(fields.product))
 
                 let id = await productService.addOneProduct(product)
@@ -48,7 +55,7 @@ exports.addOneProduct = async function addOneProduct(req, res, next) {
             }
         });   
 
-        res.status(200).json({status: 'success', error: ''})
+        
     } catch(err) {
         console.error(err)
         res.status(500).json({status: 'unsuccess', error: err})
@@ -57,7 +64,7 @@ exports.addOneProduct = async function addOneProduct(req, res, next) {
 
 exports.getOneProduct = async function getOneProduct(req, res, next) {
     try {
-        let id = req.params.id
+        let id = parseInt(req.params.id)
 
         let product = await productService.getOneProduct(id)
 
@@ -82,9 +89,11 @@ exports.getAllProducts = async function getAllProducts(req, res, next) {
 
 exports.deleteOneProduct = async function deleteOneProduct(req, res, next) {
     try {
-        let id = req.params.id
+        let id = parseInt(req.params.id)
 
         await productService.deleteOneProduct(id)
+
+        imageService.deleteAllImagesByID(id)
 
         res.status(200).json({status: 'success', error: ''})
     } catch(err) {

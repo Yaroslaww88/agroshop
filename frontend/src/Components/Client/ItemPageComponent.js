@@ -13,7 +13,7 @@ const ItemPageComponent = (props) => {
             console.log(response)
         }
 
-        __fetchProductById()
+        //__fetchProductById()
     }, []);
 
     let title = product.title || 'Name is unavailable'

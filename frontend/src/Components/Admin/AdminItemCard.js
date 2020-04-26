@@ -18,6 +18,8 @@ const AdminItemCard = ({ product, handleDropdownClick, ...props }) => {
 
     const url = getImagesUrlById(id)
 
+    console.log('url', url)
+
     function __handleDropdownClick (option) {
         handleDropdownClick(option, id)
     }

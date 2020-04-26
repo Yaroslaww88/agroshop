@@ -2,22 +2,18 @@ import React, { useState } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
 import AddCarditemForm from './AddItemCardForm'
 
-const AddCarditemModel = ({ onSubmit }) => {
+const AddCarditemModel = (props) => {
 
   const [modal, setModal] = useState(false);
 
+  const { onSubmit } = props
+
   const toggle = () => setModal(!modal);
 
-  /*let submit = (item) => {
-    let itemToSubmit = {
-        'desc': item.desc, 
-        'title': item.title,
-        'checked': item.checked
-    }
-
-    onSubmit(item);
+  let submit = (...args) => {
+    onSubmit(...args);
     toggle();
-  }*/
+  }
 
   return (
     <div>
@@ -25,7 +21,7 @@ const AddCarditemModel = ({ onSubmit }) => {
         <Modal isOpen={modal} toggle={toggle}>
             <ModalHeader toggle={toggle}>Add item</ModalHeader>
             <ModalBody>
-                <AddCarditemForm onSubmit={(product, image) => {onSubmit(product, image); toggle()}}/>
+                <AddCarditemForm onSubmit={submit}/>
             </ModalBody>
         </Modal>
     </div>

@@ -1,5 +1,6 @@
 const fs = require('fs')
 const path = require('path')
+const utils = require('../utils/removeDirSync')
 
 module.exports = class ImageService {
     /**
@@ -27,7 +28,6 @@ module.exports = class ImageService {
 
         try {
             let newDirPath = path.join(this.dir, id.toString())
-            console.log(newDirPath)
             if (!fs.existsSync(newDirPath)) {
                 fs.mkdirSync(newDirPath)
             }
@@ -35,12 +35,27 @@ module.exports = class ImageService {
             let counter = 0
 
             for (let key in images) {
+                console.log('images get', images)
                 let image = images[key]
                 let oldPath = image.path
                 let newPath = path.join(newDirPath, `${id}_${counter}.png`)
                 fs.renameSync(oldPath, newPath)
             }
         } catch(err) {
+            throw err
+        }
+    }
+
+    deleteAllImagesByID(id) {
+        if (!(Number.isInteger(id))) {
+            console.log(id)
+            throw new Error('id param must be an Integer in ImageService/deleteImagesByID, given id of type: ', typeof id, ' with value: ', id)
+        }
+
+        try {
+            let dirPath = path.join(this.dir, id.toString())
+            utils.removeImagesDirSync(dirPath)
+        } catch(err) { 
             throw err
         }
     }

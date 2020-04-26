@@ -16,8 +16,8 @@ const Main = (props) => {
 
             <Switch>
                 <Route exact path={path} component={MainPage}/>
-                <Route path="/about" component={AboutComponent}/>
-                <Route path="/:id" component={ItemPageComponent}/>
+                <Route exact path="/about/" component={AboutComponent}/>
+                <Route exact path="/:id" component={ItemPageComponent}/>
             </Switch>
         </>
     );
