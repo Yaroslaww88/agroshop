@@ -57,7 +57,7 @@ function importAll(r, id) {
 }
 
 export function getImagesUrlById(id) {
-    let files = importAll(require.context('../../public/img/', true, /.png$/), id)
+    let files = importAll(require.context('../../../public/img/', true, /.png$/), id)
     console.log('files', files)
     return files
 }
@@ -76,41 +76,3 @@ export async function fetchProductById(id) {
 
     return parseResponse(response, 'product')
 }
-
-/**
- * @param {String} login
- * @param {String} password
- */
-export async function fetchAdminLogin(login, password) {
-    let encode = btoa(`${login}:${password}`)
-
-    let response = await fetch('/api/admin/login', {
-        method: 'POST',
-        credentials: 'include',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'Authorization': `Basic ${encode}`
-        }
-    })
-
-    return parseResponse(response)
-}
-
-export async function fetchAdminLogout() {
-    let response = await fetch('/api/admin/logout', {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-        }
-    })
-
-    return parseResponse(response)
-}
-
-/*parseResponse = this.parseResponse.bind(this)
-fetchAllProducts = this.fetchAllProducts.bind(this)
-fetchProductById = this.fetchProductById.bind(this)
-fetchAdminLogin = this.fetchAdminLogin.bind(this)
-fetchAdminLogout = this.fetchAdminLogout.bind(this)*/

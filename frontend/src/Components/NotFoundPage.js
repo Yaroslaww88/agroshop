@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react'
 
-const NotFound = (props) => {
+const NotFoundPage = (props) => {
 
     console.log(props)
 
@@ -11,4 +11,4 @@ const NotFound = (props) => {
     );
 }
 
-export default NotFound
+export default NotFoundPage

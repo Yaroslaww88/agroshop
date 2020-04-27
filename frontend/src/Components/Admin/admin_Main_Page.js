@@ -1,11 +1,15 @@
-import React, { Component, useState, useEffect } from 'react'
-import {Button, Container, Row, Col} from 'reactstrap'
-import CardsGallery from '../Client/Gallery/CardsGallery'
-import AddCardItemModel from './AddCardItemModel'
-import { fetchAdminLogout, fetchAllProducts } from '../utils'
-import { deleteOneProductById, postOneProduct } from './adminUtils'
-import AdminItemCard from './AdminItemCard'
-import AdminHeader from './AdminHeader'
+import React, { useState, useEffect } from 'react'
+import { 
+    Container, 
+    Row, 
+    Col
+} from 'reactstrap'
+import CardsGallery from '../Client/Gallery/share_CardsGallery_Component'
+import AddCardItemModel from './admin_AddCardItemModel_Component'
+import { fetchAllProducts } from '../utils/utils'
+import { deleteOneProductById, postOneProduct } from './utils/adminUtils'
+import ProductCard from './admin_ProductCard_Component'
+import Header from './admin_Header_Component'
 
 const AdminPage = (props) => {
 
@@ -104,7 +108,7 @@ const AdminPage = (props) => {
         let productCards = []
         console.log(products)
         for (let product of products) {
-            let productCard = (<AdminItemCard 
+            let productCard = (<ProductCard 
                                     product={product}
                                     handleDropdownClick={handleDropdownClick}
                                     options={getDropdownOptions()}
@@ -117,7 +121,7 @@ const AdminPage = (props) => {
     return (
         <>
             <Container>
-                <AdminHeader handleLogout={handleLogout}/>
+                <Header handleLogout={handleLogout}/>
                 <Row>
                     <Col>
                         <AddCardItemModel onSubmit={postItem}/>

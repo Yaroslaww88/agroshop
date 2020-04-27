@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from 'react'
-import CardsGallery from './Gallery/CardsGallery'
-import { Button, ButtonGroup, Container, Row } from 'reactstrap'
-import { fetchAllProducts } from '../utils'
-import GaleryViewToggler from './Gallery/GaleryViewToggler'
-import SmallProductCard from './Gallery/SmallProductCard'
-import BigProductCard from './Gallery/BigProductCard'
+import { 
+    Container, 
+} from 'reactstrap'
 
-const HomePage = (props) => {
+import GaleryViewToggler from './Gallery/share_GaleryViewToggler_Component'
+import SmallProductCard from './Gallery/client_SmallProductCard_Component'
+import BigProductCard from './Gallery/client_BigProductCard_Component'
+import CardsGallery from './Gallery/share_CardsGallery_Component'
+
+import { fetchAllProducts } from '../utils/utils'
+
+const MainPage = (props) => {
 
     const [products, setProducts] = useState([]);
     const [columnCount, setColumnCount] = useState(1)
@@ -46,4 +50,4 @@ const HomePage = (props) => {
     );
 }
 
-export default HomePage;
+export default MainPage;

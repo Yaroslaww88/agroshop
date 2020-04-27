@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Button, ButtonGroup, Container, Row, Col } from 'reactstrap';
-import { fetchProductById } from '../utils'
+import { 
+    Container, 
+    Row, 
+    Col 
+} from 'reactstrap';
+import { fetchProductById } from '../utils/utils'
 
-const ItemPageComponent = (props) => {
+const ItemPage = (props) => {
 
     const [product, setProduct] = useState({})
 
@@ -38,4 +42,4 @@ const ItemPageComponent = (props) => {
     );
 }
 
-export default ItemPageComponent;
+export default ItemPage;

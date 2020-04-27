@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
-import AddCarditemForm from './AddItemCardForm'
+import { 
+  Button, 
+  Modal, 
+  ModalHeader, 
+  ModalBody
+} from 'reactstrap'
+import AddCarditemForm from './admin_AddItemCardForm_Component'
 
 const AddCarditemModel = (props) => {
 

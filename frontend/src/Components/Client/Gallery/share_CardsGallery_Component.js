@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { Row, Col } from 'reactstrap'
 
 const CardsGallery = (props) => {
@@ -66,4 +65,4 @@ const CardsGallery = (props) => {
     );
 }
 
-export default CardsGallery;
+export default CardsGallery

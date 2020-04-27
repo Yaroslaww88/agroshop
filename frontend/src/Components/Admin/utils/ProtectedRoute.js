@@ -2,7 +2,7 @@ import React from "react"
 import { Route, Redirect } from "react-router-dom"
 import { useCookies } from 'react-cookie'
 
-export const ProtectedRoute = ({component: Component, ...rest}) => {
+export const ProtectedRoute = ({component: Component, redirect, ...rest}) => {
 
     const [cookies, setCookie, removeCookie] = useCookies('')
 
@@ -18,7 +18,7 @@ export const ProtectedRoute = ({component: Component, ...rest}) => {
             } else {
                 console.log('access denied')
                 return (
-                    <Redirect to={{pathname: "/admin/login", state: {from: props.location}}}/>
+                    <Redirect to={{pathname: redirect, state: {from: props.location}}}/>
                 );
             }
         }}

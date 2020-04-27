@@ -1,9 +1,11 @@
 import React from 'react'
 import {
-  Row, Col, Button
+  Row, 
+  Col, 
+  Button
 } from 'reactstrap'
 
-const AdminHeader = ({ handleLogout }) => {
+const Header = ({ handleLogout }) => {
 
     return (
         <Row>
@@ -17,4 +19,4 @@ const AdminHeader = ({ handleLogout }) => {
     )
 };
 
-export default AdminHeader;
+export default Header

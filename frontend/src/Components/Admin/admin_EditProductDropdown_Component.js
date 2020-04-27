@@ -1,5 +1,10 @@
 import React, { useState } from 'react'
-import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
+import { 
+    Dropdown, 
+    DropdownToggle, 
+    DropdownMenu, 
+    DropdownItem 
+} from 'reactstrap'
 
 const EditProductDropdown = ({ title, options, handleDropdownClick: handleClick }) => {
     const [dropdownOpen, setDropdownOpen] = useState(false)

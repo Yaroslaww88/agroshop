@@ -1,14 +1,12 @@
-import React, { useState } from 'react'
-import PropTypes from 'prop-types'
+import React from 'react'
 import {
-  Card, CardImg, CardText, CardBody,
-  CardTitle, Button, ButtonToggle
+  CardText,
+  CardTitle,
 } from 'reactstrap'
-import AddItemCardForm from './AddItemCardForm'
-import { getImagesUrlById } from '../utils'
-import EditProductDropdown from './EditProductDropdown'
+import { getImagesUrlById } from '../utils/utils'
+import EditProductDropdown from './admin_EditProductDropdown_Component'
 
-const AdminItemCard = ({ product, handleDropdownClick, ...props }) => {
+const ProductCard = ({ product, handleDropdownClick, ...props }) => {
 
     let title = product.title || 'Name is unavailable'
     let description = product.description || 'Description is unavailable'
@@ -42,4 +40,4 @@ const AdminItemCard = ({ product, handleDropdownClick, ...props }) => {
     )
 };
 
-export default AdminItemCard;
+export default ProductCard;

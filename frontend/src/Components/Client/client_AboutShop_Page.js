@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-const AboutComponent = (props) => {
+const AboutShopPage = (props) => {
 
     console.log(props)
 
@@ -11,4 +11,4 @@ const AboutComponent = (props) => {
     );
 }
 
-export default AboutComponent;
+export default AboutShopPage

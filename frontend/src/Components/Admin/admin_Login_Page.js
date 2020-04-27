@@ -1,5 +1,12 @@
 import React, { useState } from 'react'
-import { Input, Container, Row, Col, Alert, Button } from 'reactstrap'
+import { 
+    Input, 
+    Container, 
+    Row, 
+    Col, 
+    Alert, 
+    Button 
+} from 'reactstrap'
 
 const types = {
     SUCCESS: 1,
@@ -58,4 +65,4 @@ const LoginPage = (props) => {
     );
 }
 
-export default LoginPage;
+export default LoginPage

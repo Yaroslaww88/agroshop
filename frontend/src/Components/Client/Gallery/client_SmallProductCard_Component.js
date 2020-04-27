@@ -1,12 +1,15 @@
 import React from 'react'
 import {
-  Card, CardImg, CardText, CardBody,
-  CardTitle, Button, ButtonToggle, Row, Col, CardImgOverlay,
-  NavLink
+  Card,
+  CardImg, 
+  CardText, 
+  CardBody,
+  CardTitle, 
+  Button
 } from 'reactstrap'
-import { getImagesUrlById } from '../../utils'
+import { getImagesUrlById } from '../../utils/utils.js'
 
-const ItemCard = ({ history, product }) => {
+const SmallProductCard = ({ history, product }) => {
 
     let title = product.title || 'Name is unavailable'
     let description = product.description || 'Description is unavailable'
@@ -39,4 +42,4 @@ const ItemCard = ({ history, product }) => {
     )
 }
 
-export default ItemCard;
+export default SmallProductCard

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-const AdminEditProduct = (props) => {
+const EditProduct = (props) => {
 
     console.log(props)
 
@@ -11,4 +11,4 @@ const AdminEditProduct = (props) => {
     );
 }
 
-export default AdminEditProduct
+export default EditProduct
