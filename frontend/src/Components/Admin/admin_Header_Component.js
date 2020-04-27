@@ -4,8 +4,18 @@ import {
   Col, 
   Button
 } from 'reactstrap'
+import { fetchAdminLogout } from "./utils/adminUtils";
 
-const Header = ({ handleLogout }) => {
+const Header = ({ history }) => {
+    
+    const hangleLogout = async () => {
+        try {
+            await fetchAdminLogout()
+            history.push('/admin/login')
+        } catch(err) {
+            history.push('/admin/login')
+        }
+    } 
 
     return (
         <Row>
@@ -13,7 +23,7 @@ const Header = ({ handleLogout }) => {
                 <h1>Hello from admin</h1>
             </Col>
             <Col>
-                <Button onClick={handleLogout}>Log out</Button>
+                <Button onClick={hangleLogout}>Log out</Button>
             </Col>
         </Row>
     )

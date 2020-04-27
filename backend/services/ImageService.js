@@ -1,6 +1,7 @@
 const fs = require('fs')
 const path = require('path')
 const utils = require('../utils/removeDirSync')
+const { v4: uuidv4 } = require('uuid');
 
 module.exports = class ImageService {
     /**
@@ -11,8 +12,9 @@ module.exports = class ImageService {
         this.dir = dirname
 
         this.addImages = this.addImages.bind(this)
-        this.getAllImages = this.getAllImages.bind(this)
-        this.getAllImagesByID = this.getAllImagesByID.bind(this)
+        this.deleteAllImagesByID = this.deleteAllImagesByID.bind(this)
+        this.deleteCertainImagesByID = this.deleteCertainImagesByID.bind(this)
+        this.updateImagesByID = this.updateImagesByID.bind(this)
     }
 
     /**
@@ -32,13 +34,11 @@ module.exports = class ImageService {
                 fs.mkdirSync(newDirPath)
             }
 
-            let counter = 0
-
             for (let key in images) {
-                console.log('images get', images)
+                console.log('ImageService/addImages images get', images)
                 let image = images[key]
                 let oldPath = image.path
-                let newPath = path.join(newDirPath, `${id}_${counter}.png`)
+                let newPath = path.join(newDirPath, `${id}_${uuidv4()}.png`)
                 fs.renameSync(oldPath, newPath)
             }
         } catch(err) {
@@ -60,26 +60,37 @@ module.exports = class ImageService {
         }
     }
 
-    getAllImages() {
-        return new Promise((resolve, reject) => {
-            fs.readdir(this.folder, (err, files) => {
-                if (err) {
-                    reject(err)
-                } else {
-                    resolve(files)
-                }
-            })
-        })
+    /**
+     * 
+     * @param {Integer} id 
+     * @param {String} imagesToDelete filenames of images to delete 
+     */
+    deleteCertainImagesByID(id, filenamesToDelete) {
+        try {
+            let dir = path.join(this.dir, id.toString())
+           
+            for (let filename of filenamesToDelete) {
+                console.log('ImageService/deleteCertainImagesByID', filename)
+                fs.unlinkSync(path.join(dir, filename))
+            }
+        } catch(err) {
+            throw err
+        }
     }
 
-    async getAllImagesByID(id) {
+    /**
+     * 
+     * @param {Integer} id id of image to update
+     * @param {File} newImages images to add
+     * @param {String} filenamesToDelete filenames of images to delete 
+     */
+    updateImagesByID(id, newImages, filenamesToDelete) {
         try {
-            let files = await this.getAllImages()
-            files.forEach(file => {
-                console.log(file)
-            })
+            console.log('ImageService/updateImagesByID', id, newImages, filenamesToDelete)
+            this.addImages(id, newImages)
+            this.deleteCertainImagesByID(id, filenamesToDelete)
         } catch(err) {
-            console.log(err)
+            throw err
         }
     }
 }

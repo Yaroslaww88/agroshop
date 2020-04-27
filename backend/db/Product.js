@@ -4,7 +4,7 @@ module.exports = class Product {
      * @param {String} description 
      * @param {Boolean} available 
      */
-    constructor( {id = 0, title, description, price, available} ) {
+    constructor({ id = 0, title, description, price, available }) {
         this.id = id
         this.title = title
         this.description = description

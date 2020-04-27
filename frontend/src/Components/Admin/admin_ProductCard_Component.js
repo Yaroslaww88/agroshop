@@ -14,9 +14,8 @@ const ProductCard = ({ product, handleDropdownClick, ...props }) => {
     let price = product.price || 'Price is not set'
     let id = product.id || -1
 
-    const url = getImagesUrlById(id)
-
-    console.log('url', url)
+    //get first image from array of urls
+    const url = getImagesUrlById(id)[0]
 
     function __handleDropdownClick (option) {
         handleDropdownClick(option, id)

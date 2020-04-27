@@ -17,18 +17,18 @@ const AdminPage = (props) => {
     const [reload, setReload] = useState(false)
 
     useEffect(() => {
-        const _fetchProducts = async () => {
+        const __fetchProducts = async () => {
             try {
-                let products = await fetchAllProducts()
-                setProducts(products.products)
+                let response = await fetchAllProducts()
+                setProducts(response.products)
             } catch(err) {
             }
         }
 
-        _fetchProducts()
+        __fetchProducts()
     }, [reload])
 
-    const { history, handleLogout } = props 
+    const { history } = props 
 
     // let editItem = async (item) => {
 
@@ -83,7 +83,7 @@ const AdminPage = (props) => {
     }
 
     function handleEditing(id) {
-        history.push(`/admin/${id}`)
+        history.push(`/admin/edit/${id}`)
     }
 
     function handleDropdownClick(dropdownOption, id) {
@@ -121,7 +121,7 @@ const AdminPage = (props) => {
     return (
         <>
             <Container>
-                <Header handleLogout={handleLogout}/>
+                <Header {...props}/>
                 <Row>
                     <Col>
                         <AddCardItemModel onSubmit={postItem}/>
@@ -129,7 +129,7 @@ const AdminPage = (props) => {
                 </Row>
                 <Row>
                     <Col>
-                        <CardsGallery productCards={getProductCards()} columnCount={1}/>
+                        <CardsGallery productCards={getProductCards()} columnCount={1} {...props}/>
                     </Col>
                 </Row>
             </Container>

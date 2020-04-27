@@ -11,7 +11,7 @@ const db = require('./dbMain')
  * @param {Boolean} available
  * @returns {Promise.<Object>} query response
  */
-exports.addOneProduct = async function addOneProduct({title, description, price, available}) {
+exports.addOneProduct = function addOneProduct({ title, description, price, available }) {
     const query = {
         text: `INSERT INTO products (title, description, price, available) 
             VALUES ($1, $2, $3, $4)
@@ -29,7 +29,7 @@ exports.addOneProduct = async function addOneProduct({title, description, price,
                 reject({status: 'unsuccess', error: err})
             }
         ).catch((err) => {
-            reject(err)
+            reject({status: 'unsuccess', error: err})
         })
     })
 }
@@ -38,7 +38,7 @@ exports.addOneProduct = async function addOneProduct({title, description, price,
  * @param {Integer} id
  * @returns {Promise.<Object>} query response
  */
-exports.getOneProduct = async function getOneProduct(id) {
+exports.getOneProduct = function getOneProduct(id) {
     const query = {
         text: `SELECT row_to_json(row)
                 FROM (
@@ -63,7 +63,7 @@ exports.getOneProduct = async function getOneProduct(id) {
                 reject({status: 'unsuccess', error: err})
             }
         ).catch((err) => {
-            reject(err)
+            reject({status: 'unsuccess', error: err})
         })
     })
 }
@@ -71,7 +71,7 @@ exports.getOneProduct = async function getOneProduct(id) {
 /**
  * @returns {Promise.<Object>} query response
  */
-exports.getAllProducts = async function getAllProducts() {
+exports.getAllProducts = function getAllProducts() {
     const query = {
         text: `SELECT row_to_json(row)
                 FROM (
@@ -98,12 +98,15 @@ exports.getAllProducts = async function getAllProducts() {
                 reject({status: 'unsuccess', error: err})
             }
         ).catch((err) => {
-            reject(err)
+            reject({status: 'unsuccess', error: err})
         })
     })
 }
 
-exports.deleteOneProduct = async function deleteOneProduct(id) {
+/**
+ * @param {Integer} id of product to delete
+ */
+exports.deleteOneProduct = function deleteOneProduct(id) {
     const query = {
         text: `DELETE FROM products 
             WHERE id = $1`,
@@ -120,7 +123,38 @@ exports.deleteOneProduct = async function deleteOneProduct(id) {
                 reject({status: 'unsuccess', error: err})
             }
         ).catch((err) => {
-            reject(err)
+            reject({status: 'unsuccess', error: err})
+        })
+    })
+}
+
+/**
+ * @param {String} title
+ * @param {String} description
+ * @param {String} price
+ * @param {Boolean} available
+ * @returns {Promise.<Object>} query response
+ */
+exports.updateOneProduct = async function({ id, title, description, price, available }) {
+    const query = {
+        text: `UPDATE products
+            SET (title, description, price, available) = ($2, $3, $4, $5)
+            WHERE id = $1`,
+        values: [id, title, description, price, available]
+    }
+
+    return new Promise((resolve, reject) => {
+        db.query(query.text, query.values)
+        .then(
+            function onResolved(res) {
+                resolve({status: 'success', error: ''})
+            },
+            function onRejected(err) {
+                reject({status: 'unsuccess', error: err})
+            }
+        )
+        .catch((err) => {
+            reject({status: 'unsuccess', error: err})
         })
     })
 }

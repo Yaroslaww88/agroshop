@@ -7,6 +7,7 @@ router.get('/products/all', controller.getAllProducts)
 router.get('/products/:id', controller.getOneProduct)
 router.post('/products', controller.addOneProduct)
 router.delete('/products/:id', authAdminMiddleware.adminIsAuth, controller.deleteOneProduct)
+router.put('/products/:id', authAdminMiddleware.adminIsAuth, controller.updateOneProduct)
 //router.delete('/products', auth.auth, controller.deleteAllProducts)
 //router.put('/products/:id', auth.auth, upload.single('image'), controller.updateOneProduct)
 

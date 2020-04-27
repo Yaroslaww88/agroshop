@@ -7,26 +7,28 @@ import {
     Alert, 
     Button 
 } from 'reactstrap'
+import { fetchAdminLogin } from "./utils/adminUtils";
 
 const types = {
     SUCCESS: 1,
     UNSUCCESS: 0
 }
 
-const LoginPage = (props) => {
+const LoginPage = ({ history, ...props }) => {
 
-    const [username, setUsername] = useState('')
+    const [login, setLogin] = useState('')
     const [password, setPassword] = useState('')
-    const [status, setStatus] = useState(0)
+    const [status, setStatus] = useState(types.UNSUCCESS)
 
-    const login = () => {
+    const hangleLogin = async () => {
         try {
-            props.hangleLogin(username, password)
+            await fetchAdminLogin(login, password)
             setStatus(types.SUCCESS)
-        } catch (err) {
+            history.push('/admin')
+        } catch(err) {
             setStatus(types.UNSUCCESS)
         }
-    }
+    } 
 
     return (
         <div>
@@ -38,7 +40,7 @@ const LoginPage = (props) => {
                 </Row>
                 <Row>
                     <Col md={{ size: 3, offset: 4 }}>
-                        <Input placeholder="username" onChange={e => setUsername(e.target.value)}/>
+                        <Input placeholder="login" onChange={e => setLogin(e.target.value)}/>
                     </Col>
                 </Row>
                 <Row>
@@ -48,10 +50,10 @@ const LoginPage = (props) => {
                 </Row>
                 <Row>
                     <Col md={{ size: 3, offset: 4 }}>
-                        <Button onClick={login}>Log in</Button>
+                        <Button onClick={hangleLogin}>Log in</Button>
                     </Col>
                 </Row>
-                {status === types.SUCCESS && 
+                {status === types.UNSUCCESS && 
                 <Row>
                     <Col md={{ size: 3, offset: 4 }}>
                         <Alert color="danger">

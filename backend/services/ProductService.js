@@ -28,7 +28,7 @@ module.exports = class ProductService {
             if (data.status === 'success') {
                 return data.result
             } else {
-                throw new Error('Something wrong in addOneProduct query')
+                throw new Error('Something wrong in addOneProduct query', data.error)
             }
         } catch(err) {
             throw err
@@ -52,7 +52,7 @@ module.exports = class ProductService {
                     throw product.getError()
                 }*/
             } else {
-                throw new Error('Something wrong in addOneProduct query')
+                throw new Error('Something wrong in addOneProduct query', data.error)
             }
         } catch(err) {
             throw err
@@ -73,7 +73,7 @@ module.exports = class ProductService {
                 }
                 return products
             } else {
-                throw new Error('Something wrong in getAllProducts query')
+                throw new Error('Something wrong in getAllProducts query', data.error)
             }
         } catch(err) {
             throw err
@@ -92,6 +92,24 @@ module.exports = class ProductService {
                 return ''
             } else {
                 throw new Errror('Something wrong in deleteOneProduct query')
+            }
+        } catch(err) {
+            throw err
+        }
+    }
+
+    async updateOneProduct(product) {
+        if (!(product instanceof Product)) {
+            throw new Error(`product must be instance of Product class`)
+        }
+
+        try {
+            let { id, title, description, available, price } = product.serializeToObject()
+            let data = await this.db.updateOneProduct({ id, title, description, available, price })
+            if (data.status === 'success') {
+                return ''
+            } else {
+                throw new Error('Something wrong in updateOneProduct query', data.error)
             }
         } catch(err) {
             throw err

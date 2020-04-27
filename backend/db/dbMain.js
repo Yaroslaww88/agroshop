@@ -10,11 +10,11 @@ module.exports = {
     return new Promise((resolve, reject) => {
       pool.query(text, params)
       .then((res) => {
-        //console.log('query resolved', { text, duration, rows: res.rowCount })
+        console.log('query resolved', { text, duration, rows: res.rowCount })
         resolve(res)
       })
       .catch((err) => {
-        //console.log('query rejected', { text, duration, error: err })
+        console.log('query rejected', { text, duration, error: err })
         reject(err)
       })
     })

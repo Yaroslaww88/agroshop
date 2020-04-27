@@ -6,8 +6,6 @@ export const ProtectedRoute = ({component: Component, redirect, ...rest}) => {
 
     const [cookies, setCookie, removeCookie] = useCookies('')
 
-    console.log(cookies.user)
-
     return (
         <Route
         {...rest}
