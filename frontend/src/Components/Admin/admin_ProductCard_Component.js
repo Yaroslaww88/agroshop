@@ -15,18 +15,18 @@ const ProductCard = ({ product, handleDropdownClick, ...props }) => {
     let id = product.id || -1
 
     //get first image from array of urls
-    const url = getImagesUrlById(id)[0]
+    const url = getImagesUrlById(id)[0] && getImagesUrlById(id)[0].url
 
     function __handleDropdownClick (option) {
         handleDropdownClick(option, id)
     }
 
     return (
-        <div class="card flex-row flex-wrap">
-            <div class="card-header border-0">
-                <img className="header-img" src={url} alt="image"/>
+        <div className="card flex flex-row flex-wrap">
+            <div className="card-header border-0">
+                <img className="header-img" src={url} style={{'max-height': '200px'}} alt="image"/>
             </div>
-            <div class="card-block px-2">
+            <div className="card-block px-2">
                 <CardTitle> {title} </CardTitle>
                 <CardText> {description} </CardText>
                 <EditProductDropdown

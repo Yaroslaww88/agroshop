@@ -66,3 +66,38 @@ export async function fetchAdminLogout() {
 
     return parseResponse(response)
 }
+
+function getFilenames(images) {
+    let filenames = []
+    for (let image of images) {
+        let path = image.split('/')
+        filenames.push(path[path.length - 1])
+    }
+    console.log(filenames)
+    return filenames
+}
+
+export async function updateOneProduct(product, imageToAdd, imagesToRemove) {
+    let formData = new FormData()
+    formData.append('product', JSON.stringify(product))
+    console.log('images to add', imageToAdd)
+    if (imageToAdd) {
+        formData.append('images', imageToAdd)
+    }
+    if (Array.isArray(imagesToRemove)) {
+        formData.append('filenames', JSON.stringify(getFilenames(imagesToRemove)))
+    }
+
+    let { id } = product
+
+    let response = await fetch(`/api/products/${id}`, {
+        method: 'PUT',
+        credentials: 'include',
+        headers: {
+            'Accept': 'application/json',
+        },
+        body: formData
+    })
+
+    return parseResponse(response)
+}

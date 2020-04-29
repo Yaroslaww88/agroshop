@@ -37,10 +37,6 @@ const AdditemCardForm = ({ onSubmit }) => {
         })
     }
 
-    useEffect(() => {
-       console.log('useEffect', available) 
-    }, [available])
-
     return (
         <Form>
             <FormGroup row>

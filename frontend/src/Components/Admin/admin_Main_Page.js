@@ -5,7 +5,7 @@ import {
     Col
 } from 'reactstrap'
 import CardsGallery from '../Client/Gallery/share_CardsGallery_Component'
-import AddCardItemModel from './admin_AddCardItemModel_Component'
+import AddProductModel from './admin_AddProductModel_Component'
 import { fetchAllProducts } from '../utils/utils'
 import { deleteOneProductById, postOneProduct } from './utils/adminUtils'
 import ProductCard from './admin_ProductCard_Component'
@@ -105,6 +105,7 @@ const AdminPage = (props) => {
     }
 
     function getProductCards() {
+        console.log('get cards...')
         let productCards = []
         console.log(products)
         for (let product of products) {
@@ -119,21 +120,19 @@ const AdminPage = (props) => {
     }
 
     return (
-        <>
-            <Container>
-                <Header {...props}/>
-                <Row>
-                    <Col>
-                        <AddCardItemModel onSubmit={postItem}/>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col>
-                        <CardsGallery productCards={getProductCards()} columnCount={1} {...props}/>
-                    </Col>
-                </Row>
-            </Container>
-        </>
+        <Container>
+            <Header {...props}/>
+            <Row>
+                <Col>
+                    <AddProductModel onSubmit={postItem}/>
+                </Col>
+            </Row>
+            <Row>
+                <Col>
+                    <CardsGallery productCards={getProductCards()} columnCount={1} {...props}/>
+                </Col>
+            </Row>
+        </Container>
     );
 }
 

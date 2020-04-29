@@ -51,7 +51,10 @@ function importAll(r, id) {
     let files = []
     for (let file of r.keys()) {
         if (isValidPathForID(file, id))
-            files.push(r(file))
+            files.push({
+                url: r(file),
+                filename: file
+            })
     }
     return files
 }

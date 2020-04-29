@@ -30,7 +30,7 @@ exports.addOneProduct = async function addOneProduct(req, res, next) {
          * Set folder where to upload images !NOTE this is temporary path. After adding product to db this file will be moved
          */
         form.on('fileBegin', (filename, file) => {
-            file.path = `${imagesFolder}/${id}_${uuidv4()}.png`
+            file.path = `${imagesFolder}/${uuidv4()}.png`
             counter++
         })
 
@@ -139,6 +139,7 @@ exports.updateOneProduct = async function updateOneProduct(req, res, next) {
                 /**
                  * Move images from temporary folder /images to subdir /{id} Name will be {id}_{counter}.png 
                  */
+                console.log(fields)
                 console.log('Parsed JSOn', JSON.parse(fields.filenames))
                 imageService.updateImagesByID(id, files, JSON.parse(fields.filenames))
             }

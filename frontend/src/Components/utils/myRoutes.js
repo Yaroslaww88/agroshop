@@ -17,6 +17,7 @@ export function RouteWithSubRoutes(route) {
             <ProtectedRoute
                 path={route.path}
                 redirect={route.redirect || '/'}
+                component={route.component}
                 {...route}
             />
         )
